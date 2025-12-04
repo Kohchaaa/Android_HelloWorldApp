@@ -114,7 +114,7 @@ fun CountButton() {
         Text(
             text = "now count is $count"
         )
-        TestButton({ count++ })
+        TestButton( onClick = { count++ })
     }
 }
 
