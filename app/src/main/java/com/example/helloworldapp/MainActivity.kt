@@ -1,5 +1,6 @@
 package com.example.helloworldapp
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -23,11 +24,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.helloworldapp.ui.theme.HelloWorldAppTheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 import com.example.helloworldapp.ui.userSettingInput.UserSettingInputActivity
 
 class MainActivity : ComponentActivity() {
@@ -37,7 +38,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             HelloWorldAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    RootLayout()
+                    RootLayout(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -45,7 +46,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun RootLayout() {
+fun RootLayout(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
@@ -53,8 +55,7 @@ fun RootLayout() {
         Greeting(
             name = "kohcha",
         )
-        TestButton({})
-        CountButton()
+        TestButton({ changeActivity(context) })
     }
 }
 
@@ -95,33 +96,15 @@ fun TestButton(onClick: () -> Unit){
     }
 }
 
+fun changeActivity(context: Context) {
+    val intent = Intent(context, UserSettingInputActivity::class)
+    context.startActivity(intent)
+}
+
 @Preview(showBackground = true)
 @Composable
 fun TestButtonPreview() {
     HelloWorldAppTheme() {
         TestButton({})
-    }
-}
-
-@Composable
-fun CountButton() {
-    // var count: 変数宣言
-    // by: Kotlinの記述。
-    // remember: Composableが再レンダリングされても値を覚えておくように
-    var count by remember { mutableStateOf(0) }
-
-    Column() {
-        Text(
-            text = "now count is $count"
-        )
-        TestButton( onClick = { count++ })
-    }
-}
-
-@Preview
-@Composable
-fun CountButtonPreview() {
-    HelloWorldAppTheme() {
-        CountButton()
     }
 }
