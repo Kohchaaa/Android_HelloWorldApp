@@ -9,19 +9,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -50,7 +44,7 @@ fun RootLayout(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         Greeting(
             name = "kohcha",
@@ -72,7 +66,7 @@ fun RootLayoutPreview() {
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
         text = "hello my name is $name",
-        modifier = Modifier
+        modifier = modifier
             .background(Color.Cyan)
             .border(1.dp, color = Color.Blue)
             .padding(20.dp)
@@ -97,7 +91,7 @@ fun TestButton(onClick: () -> Unit){
 }
 
 fun changeActivity(context: Context) {
-    val intent = Intent(context, UserSettingInputActivity::class)
+    val intent = Intent(context, UserSettingInputActivity::class.java)
     context.startActivity(intent)
 }
 
