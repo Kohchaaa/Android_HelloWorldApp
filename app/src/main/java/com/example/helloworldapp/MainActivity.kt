@@ -49,7 +49,7 @@ fun RootLayout(modifier: Modifier = Modifier) {
         Greeting(
             name = "kohcha",
         )
-        TestButton({ changeActivity(context) })
+        TestButton(label = "Go to UserInput", onClick ={ changeActivity(context) })
     }
 }
 
@@ -67,7 +67,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
         text = "hello my name is $name",
         modifier = modifier
-            .background(Color.Cyan)
+            .background(Color.DarkGray)
             .border(1.dp, color = Color.Blue)
             .padding(20.dp)
     )
@@ -82,11 +82,11 @@ fun GreetingPreview() {
 }
 
 @Composable
-fun TestButton(onClick: () -> Unit){
+fun TestButton(label: String = "Button", onClick: () -> Unit){
     Button(
         onClick = onClick
     ) {
-        Text(text = "Button")
+        Text(text = label)
     }
 }
 
@@ -99,6 +99,6 @@ fun changeActivity(context: Context) {
 @Composable
 fun TestButtonPreview() {
     HelloWorldAppTheme() {
-        TestButton({})
+        TestButton("", onClick = {})
     }
 }
