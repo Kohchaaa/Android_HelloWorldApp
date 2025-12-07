@@ -5,6 +5,7 @@ import java.util.UUID
 
 data class UserInput(
     val userId: String = UUID.randomUUID().toString(),
+    val displayName: String,
     val birthDate: LocalDate,
     val gender: Gender,
     val allergies: Array<String>,
@@ -20,6 +21,7 @@ data class UserInput(
         other as UserInput
 
         if (userId != other.userId) return false
+        if (displayName != other.displayName) return false
         if (birthDate != other.birthDate) return false
         if (gender != other.gender) return false
         if (!allergies.contentEquals(other.allergies)) return false
@@ -33,6 +35,7 @@ data class UserInput(
 
     override fun hashCode(): Int {
         var result = userId.hashCode()
+        result = 31 * result + displayName.hashCode()
         result = 31 * result + birthDate.hashCode()
         result = 31 * result + gender.hashCode()
         result = 31 * result + allergies.contentHashCode()
