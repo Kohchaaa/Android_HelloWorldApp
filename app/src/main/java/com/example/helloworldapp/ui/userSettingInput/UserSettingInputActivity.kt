@@ -29,7 +29,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
@@ -41,8 +40,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.FragmentActivity
-import com.example.helloworldapp.ui.theme.HelloWorldAppTheme
 import com.example.helloworldapp.R
+import com.example.helloworldapp.ui.theme.HelloWorldAppTheme
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -116,8 +115,21 @@ class UserSettingInputActivity : FragmentActivity() {
                                 }
                             )
 
+                            StringListSetting (
+                                label = "嫌いな食材",
+                                chips = dislikesIngredients,
+                                onChipsChange = { chips ->
+                                    dislikesIngredients = chips
+                                }
+                            )
 
-
+                            StringListSetting (
+                                label = "嫌いな料理",
+                                chips = dislikesDishes,
+                                onChipsChange = { dislikeDishes ->
+                                    dislikesDishes = dislikeDishes
+                                }
+                            )
                         }
 
                         Column() {
