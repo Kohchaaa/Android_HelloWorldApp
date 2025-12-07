@@ -1,48 +1,54 @@
 package com.example.helloworldapp.ui.userSettingInput
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-//import androidx.appcompat.app.AppCompatActivity
-//import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Outline
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.FragmentActivity
 import com.example.helloworldapp.ui.theme.HelloWorldAppTheme
 import com.example.helloworldapp.R
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 class UserSettingInputActivity : FragmentActivity() {
+    @OptIn(FlowPreview::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -50,7 +56,19 @@ class UserSettingInputActivity : FragmentActivity() {
         setContent {
 
             // state
+            val userNameState = rememberTextFieldState(" ")
+            var userName by rememberSaveable { mutableStateOf("aaa") }
             var selectedDate by remember { mutableStateOf("YYYY-MM-DD") }
+
+            // hook
+            LaunchedEffect(userNameState) {
+                snapshotFlow { userNameState.text }
+                    .debounce(300)
+                    .distinctUntilChanged()
+                    .collect { text ->
+                        userName = text.toString()
+                    }
+            }
 
             // function
             val datePickerCallback = { year: Int, month: Int, day: Int ->
@@ -60,25 +78,35 @@ class UserSettingInputActivity : FragmentActivity() {
             HelloWorldAppTheme {
                 Scaffold(modifier = Modifier
                     .fillMaxSize()
-                    .border(width = 1.dp, color = Color.Red)
                 ) { innerPadding ->
                     Column(
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
                             .fillMaxWidth()
                             .border(width = 1.dp, color = Color.DarkGray)
                             .padding(innerPadding)
                     ) {
-                        PageTitle(title = "UserSettings")
+
+                        PageTitle(title = "設定")
+
+                        UserNameSetting(
+                            userName = userNameState,
+                            currentUserName = userName
+                        )
+
                         BirthdaySetting(
                             currentDate = selectedDate,
-                            buttonLabel = "Birthday",
                             onButtonClick = {
                                 val dialog = DatePicker(datePickerCallback)
                                 dialog.show(supportFragmentManager, "datePicker")
                             }
                         )
-                        ToggleIconButtonExample()
+
+                        Text(
+                            text = userName + selectedDate,
+                            fontSize = 24.sp
+                        )
                     }
                 }
             }
@@ -91,47 +119,92 @@ class UserSettingInputActivity : FragmentActivity() {
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = Color.Blue)
+                .background(color = Color.DarkGray)
                 .padding(20.dp)
         ) {
-            Text(text = title)
+            Text(
+                text = title,
+                fontSize = 24.sp
+            )
         }
+    }
+
+    @Composable
+    fun SettingItem(itemName: String, content: @Composable () -> Unit) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = Color.DarkGray)
+                .padding(horizontal = 20.dp, vertical = 20.dp)
+        ) {
+            Text(
+                text = itemName,
+                modifier = Modifier.padding(end = 16.dp)
+            )
+            content()
+        }
+    }
+
+    @Composable
+    fun UserNameSetting(
+        userName: TextFieldState,
+        currentUserName: String,
+    ) {
+        SettingItem(
+            itemName = "ニックネーム",
+            content = {
+                BasicTextField(
+                    state = userName,
+                    lineLimits = TextFieldLineLimits.SingleLine,
+                    textStyle = LocalTextStyle
+                        .current
+                        .copy(
+                            color = Color.White,
+                            fontSize = 16.sp,
+                            lineHeight = 24.sp
+                        ),
+                    onKeyboardAction = { userName.setTextAndPlaceCursorAtEnd(currentUserName) },
+                    modifier = Modifier
+                        .width(200.dp)
+                        .border(width = 1.dp, color = Color.Gray, shape = RoundedCornerShape(8.dp))
+                        .padding(10.dp)
+                )
+            }
+        )
     }
 
     @Composable
     fun BirthdaySetting(
         currentDate: String,
-        buttonLabel: String,
         onButtonClick: () -> Unit
     ) {
-        Row() {
-            Text(text = currentDate)
-            Button(
-                onClick = onButtonClick,
-                modifier = Modifier
-                    .padding(10.dp)
-            ) {
-                Text(text = buttonLabel)
+        SettingItem(
+            itemName = "誕生日",
+            content = {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .clickable { onButtonClick() }
+                        .border(width = 1.dp, color = Color.Gray, shape = RoundedCornerShape(8.dp))
+                        .padding(10.dp)
+                ) {
+                    Text(
+                        text = currentDate,
+                        textAlign = TextAlign.Center,
+                    )
+                    Icon(
+                        painter = painterResource(R.drawable.edit_calender_icon_white),
+                        contentDescription = "Change Birthday"
+                    )
+                }
             }
-        }
+        )
     }
 
+    @SuppressLint("DefaultLocale")
     fun formatDate(year: Int, month: Int, day: Int): String{
         return String.format("%04d-%02d-%02d", year, month + 1, day)
-    }
-
-    @Composable
-    fun ToggleIconButtonExample() {
-        // isToggled initial value should be read from a view model or persistent storage.
-        var isToggled by rememberSaveable { mutableStateOf(false) }
-
-        IconButton (
-            onClick = { isToggled = !isToggled }
-        ) {
-            Icon(
-                painter = if (isToggled) painterResource(R.drawable.edit_calender_icon_white) else painterResource(R.drawable.edit_calender_icon_gray),
-                contentDescription = if (isToggled) "Selected icon button" else "Unselected icon button."
-            )
-        }
     }
 }
