@@ -56,9 +56,14 @@ class UserSettingInputActivity : FragmentActivity() {
         setContent {
 
             // state
-            val userNameState = rememberTextFieldState(" ")
-            var userName by rememberSaveable { mutableStateOf("aaa") }
-            var selectedDate by remember { mutableStateOf("YYYY-MM-DD") }
+            val userNameState = rememberTextFieldState("")
+            var userName by rememberSaveable { mutableStateOf("") }
+            var selectedDate by rememberSaveable { mutableStateOf("YYYY-MM-DD") }
+            var selectedGender by rememberSaveable { mutableStateOf<Gender?>(null) }
+            var dislikesIngredients by rememberSaveable { mutableStateOf(listOf<String>()) }
+            var dislikesDishes by rememberSaveable { mutableStateOf(listOf<String>()) }
+            var customAttributes by rememberSaveable { mutableStateOf(mapOf<String, String>()) }
+
 
             // hook
             LaunchedEffect(userNameState) {
@@ -79,34 +84,50 @@ class UserSettingInputActivity : FragmentActivity() {
                 Scaffold(modifier = Modifier
                     .fillMaxSize()
                 ) { innerPadding ->
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .border(width = 1.dp, color = Color.DarkGray)
-                            .padding(innerPadding)
-                    ) {
+                    Column() {
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(16.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .border(width = 1.dp, color = Color.DarkGray)
+                                .padding(innerPadding)
+                        ) {
 
-                        PageTitle(title = "設定")
+                            PageTitle(title = "設定")
 
-                        UserNameSetting(
-                            userName = userNameState,
-                            currentUserName = userName
-                        )
+                            UserNameSetting(
+                                userName = userNameState,
+                                currentUserName = userName
+                            )
 
-                        BirthdaySetting(
-                            currentDate = selectedDate,
-                            onButtonClick = {
-                                val dialog = DatePicker(datePickerCallback)
-                                dialog.show(supportFragmentManager, "datePicker")
-                            }
-                        )
+                            BirthdaySetting(
+                                currentDate = selectedDate,
+                                onButtonClick = {
+                                    val dialog = DatePicker(datePickerCallback)
+                                    dialog.show(supportFragmentManager, "datePicker")
+                                }
+                            )
 
-                        Text(
-                            text = userName + selectedDate,
-                            fontSize = 24.sp
-                        )
+                            GenderSetting(
+                                selectedGender = selectedGender,
+                                onGenderSelected = { gender ->
+                                    selectedGender = gender
+                                }
+                            )
+
+
+
+                        }
+
+                        Column() {
+                            Text(text = userName.ifEmpty { "null" })
+                            Text(text = selectedDate)
+                            Text(text = selectedGender?.value ?: "null")
+                            Text(text = dislikesIngredients.toString())
+                            Text(text = dislikesDishes.toString())
+                            Text(text = customAttributes.toString())
+                        }
                     }
                 }
             }
@@ -126,24 +147,6 @@ class UserSettingInputActivity : FragmentActivity() {
                 text = title,
                 fontSize = 24.sp
             )
-        }
-    }
-
-    @Composable
-    fun SettingItem(itemName: String, content: @Composable () -> Unit) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = Color.DarkGray)
-                .padding(horizontal = 20.dp, vertical = 20.dp)
-        ) {
-            Text(
-                text = itemName,
-                modifier = Modifier.padding(end = 16.dp)
-            )
-            content()
         }
     }
 
