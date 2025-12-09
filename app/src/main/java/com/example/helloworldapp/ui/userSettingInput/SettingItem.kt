@@ -2,6 +2,7 @@ package com.example.helloworldapp.ui.userSettingInput
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,19 +14,41 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SettingItem(itemName: String, content: @Composable () -> Unit) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(color = Color.DarkGray)
-            .padding(horizontal = 20.dp, vertical = 20.dp)
-    ) {
-        Text(
-            text = itemName,
-            modifier = Modifier.padding(end = 16.dp)
-        )
-        content()
+fun SettingItem(
+    itemName: String,
+    content: @Composable () -> Unit,
+    isRow: Boolean = true
+) {
+    if(isRow) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = Color.DarkGray)
+                .padding(horizontal = 20.dp, vertical = 20.dp)
+        ) {
+            Text(
+                text = itemName,
+                modifier = Modifier.padding(end = 16.dp)
+            )
+            content()
+        }
+    } else {
+        Column (
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = Color.DarkGray)
+                .padding(horizontal = 20.dp, vertical = 20.dp)
+        ) {
+            Text(
+                text = itemName,
+                modifier = Modifier.padding(end = 16.dp)
+            )
+            content()
+        }
     }
+
 }
