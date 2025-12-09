@@ -13,14 +13,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Scaffold
@@ -61,7 +64,7 @@ class UserSettingInputActivity : FragmentActivity() {
             var selectedGender by rememberSaveable { mutableStateOf<Gender?>(null) }
             var dislikesIngredients by rememberSaveable { mutableStateOf(listOf<String>()) }
             var dislikesDishes by rememberSaveable { mutableStateOf(listOf<String>()) }
-            var customAttributes by rememberSaveable { mutableStateOf(mapOf<String, String>()) }
+            var customAttributes by rememberSaveable { mutableStateOf(mapOf<String, String>("" to "")) }
 
 
             // hook
@@ -83,7 +86,14 @@ class UserSettingInputActivity : FragmentActivity() {
                 Scaffold(modifier = Modifier
                     .fillMaxSize()
                 ) { innerPadding ->
-                    Column() {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
+                            .imePadding()
+                    ) {
                         Column(
                             verticalArrangement = Arrangement.spacedBy(16.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
@@ -128,6 +138,13 @@ class UserSettingInputActivity : FragmentActivity() {
                                 chips = dislikesDishes,
                                 onChipsChange = { dislikeDishes ->
                                     dislikesDishes = dislikeDishes
+                                }
+                            )
+
+                            CustomAttributeSetting(
+                                customAttributes = customAttributes,
+                                onDataChange = { newMap ->
+                                    customAttributes = newMap
                                 }
                             )
                         }
