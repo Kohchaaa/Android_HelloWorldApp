@@ -9,6 +9,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
@@ -20,6 +21,8 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import java.util.UUID
@@ -29,9 +32,11 @@ import java.util.UUID
 data class EditableItem(
     val id: String = UUID.randomUUID().toString(),
     var key: String,
-    var value: String
+    var value: String,
+    val focusRequester: FocusRequester = FocusRequester(),
 )
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MapDataInput(
     mapData: Map<String, String>,
@@ -67,23 +72,25 @@ fun MapDataInput(
             // これにより、テキスト入力でkeyが変わってもリコンポーズ時に同一コンポーネントとみなされる
             key(item.id) {
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     // --- Key（項目名）入力 ---
                     OutlinedTextField(
                         value = item.key,
                         onValueChange = { newKey ->
-                            // 1. リスト内のデータを直接更新
-                            item.key = newKey
-                            // 2. Composeに変更を通知するためにリストの要素を置換（またはSnapshotStateListの更新トリガー）
+                            // 描画用のデータ変更
                             editableList[index] = item.copy(key = newKey)
                             // 3. 親のMapへ同期
                             syncToParent()
                         },
                         label = { Text("項目名") },
-                        modifier = Modifier.weight(1f),
-                        singleLine = true
+                        modifier = Modifier
+                            .weight(1f)
+                            .focusRequester(item.focusRequester),
+                        singleLine = true,
                     )
 
                     Spacer(modifier = Modifier.width(8.dp))
@@ -92,12 +99,12 @@ fun MapDataInput(
                     OutlinedTextField(
                         value = item.value,
                         onValueChange = { newValue ->
-                            item.value = newValue
                             editableList[index] = item.copy(value = newValue)
                             syncToParent()
                         },
                         label = { Text("内容") },
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier
+                            .weight(1f),
                         singleLine = true,
                         keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
                     )
@@ -116,11 +123,17 @@ fun MapDataInput(
         // --- 追加 ---
         OutlinedButton(
             onClick = {
-                // 空の行を追加
-                editableList.add(EditableItem(key = "", value = ""))
-                // 追加時はキーが空なのでMapにすると消える可能性があるが、
-                // UI上（List）には存在するのでユーザーは入力できる
-                syncToParent()
+                // 1. リストの最後のアイテムのキーが空文字でないかチェックする
+                //    (リストが空の場合も条件を満たす)
+                val canAdd = editableList.lastOrNull()?.key?.isNotEmpty() ?: true
+
+                if (canAdd) {
+                    // 2. 最後の行が入力済みの場合にのみ、新しい空の行を追加する
+                    editableList.add(EditableItem(key = "", value = ""))
+                    syncToParent()
+                } else {
+                    editableList.lastOrNull()?.focusRequester?.requestFocus()
+                }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
