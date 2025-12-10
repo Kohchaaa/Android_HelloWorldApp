@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.InputChip
+import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -52,13 +53,6 @@ fun ChipTextField(   // AI産
     val focusRequester = remember { FocusRequester() }
 
     Column(modifier = modifier) {
-        // ラベル（任意）
-/*        Text(
-            text = label,
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(bottom = 4.dp, start = 4.dp)
-        )*/
 
         // テキストフィールドのような枠線を作るコンテナ
         Surface(
@@ -93,7 +87,8 @@ fun ChipTextField(   // AI産
                         label = {
                             Text(
                                 text = chip,
-                                fontSize = 16.sp
+                                fontSize = 16.sp,
+                                color = MaterialTheme.colorScheme.onPrimary
                             )
                         },
                         trailingIcon = {
@@ -105,6 +100,13 @@ fun ChipTextField(   // AI産
                                     .clickable { onChipsChange(chips - chip) }
                             )
                         },
+                        colors = InputChipDefaults.inputChipColors(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            labelColor = MaterialTheme.colorScheme.onPrimary,
+                            selectedContainerColor = MaterialTheme.colorScheme.primary,
+                            selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                            selectedTrailingIconColor = MaterialTheme.colorScheme.onPrimary,
+                        ),
                         modifier = Modifier
                             .height(28.dp)
                     )

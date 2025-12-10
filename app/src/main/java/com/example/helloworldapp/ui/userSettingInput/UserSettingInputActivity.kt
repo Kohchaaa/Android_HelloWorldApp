@@ -7,6 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,12 +28,14 @@ import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
@@ -90,16 +94,16 @@ class UserSettingInputActivity : FragmentActivity() {
                         verticalArrangement = Arrangement.spacedBy(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
-                            .fillMaxSize()
                             .verticalScroll(rememberScrollState())
+                            .background(color = MaterialTheme.colorScheme.background)
                             .imePadding()
                     ) {
+                        // 実際の設定項目のほう
                         Column(
                             verticalArrangement = Arrangement.spacedBy(16.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .border(width = 1.dp, color = Color.DarkGray)
                                 .padding(innerPadding)
                         ) {
 
@@ -149,6 +153,7 @@ class UserSettingInputActivity : FragmentActivity() {
                             )
                         }
 
+                        // デバッグ用
                         Column() {
                             Text(text = userName.ifEmpty { "null" })
                             Text(text = selectedDate)
@@ -169,12 +174,13 @@ class UserSettingInputActivity : FragmentActivity() {
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = Color.DarkGray)
+                .background(color = MaterialTheme.colorScheme.primary)
                 .padding(20.dp)
         ) {
             Text(
                 text = title,
-                fontSize = 24.sp
+                fontSize = 24.sp,
+                color = MaterialTheme.colorScheme.onPrimary
             )
         }
     }
@@ -184,23 +190,37 @@ class UserSettingInputActivity : FragmentActivity() {
         userName: TextFieldState,
         currentUserName: String,
     ) {
+        val interactionSource = remember { MutableInteractionSource() }
+        val isFocused by interactionSource.collectIsFocusedAsState()
+
+        val borderColor = if (isFocused) {
+            MaterialTheme.colorScheme.primary
+        } else {
+            MaterialTheme.colorScheme.outline
+        }
+
         SettingItem(
             itemName = "ニックネーム",
             content = {
                 BasicTextField(
                     state = userName,
+                    interactionSource = interactionSource,
                     lineLimits = TextFieldLineLimits.SingleLine,
                     textStyle = LocalTextStyle
                         .current
                         .copy(
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 16.sp,
                             lineHeight = 24.sp
                         ),
                     onKeyboardAction = { userName.setTextAndPlaceCursorAtEnd(currentUserName) },
                     modifier = Modifier
                         .width(200.dp)
-                        .border(width = 1.dp, color = Color.Gray, shape = RoundedCornerShape(8.dp))
+                        .border(
+                            width = 1.dp,
+                            color = borderColor,
+                            shape = RoundedCornerShape(8.dp)
+                        )
                         .padding(10.dp)
                 )
             }

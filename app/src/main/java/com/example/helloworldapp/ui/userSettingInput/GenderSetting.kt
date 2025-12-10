@@ -11,7 +11,6 @@ import androidx.compose.material3.OutlinedIconToggleButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -35,7 +34,7 @@ fun GenderSetting(
                             .width(60.dp),
                         shape = RoundedCornerShape(8.dp),
                         colors = IconButtonDefaults.outlinedIconToggleButtonColors(
-                            containerColor = Color.DarkGray,
+                            containerColor = MaterialTheme.colorScheme.surface,
                             checkedContainerColor = MaterialTheme.colorScheme.primary,
                             checkedContentColor = MaterialTheme.colorScheme.onPrimary
                         )
