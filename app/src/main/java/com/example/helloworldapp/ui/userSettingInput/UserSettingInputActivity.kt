@@ -1,5 +1,6 @@
 package com.example.helloworldapp.ui.userSettingInput
 
+import AllergenSelectSection
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -66,6 +67,7 @@ class UserSettingInputActivity : FragmentActivity() {
             var userName by rememberSaveable { mutableStateOf("") }
             var selectedDate by rememberSaveable { mutableStateOf("YYYY-MM-DD") }
             var selectedGender by rememberSaveable { mutableStateOf<Gender?>(null) }
+            var selectedAllergen by rememberSaveable { mutableStateOf( setOf<String>()) }
             var dislikesIngredients by rememberSaveable { mutableStateOf(listOf<String>()) }
             var dislikesDishes by rememberSaveable { mutableStateOf(listOf<String>()) }
             var customAttributes by rememberSaveable { mutableStateOf(mapOf<String, String>("" to "")) }
@@ -129,6 +131,19 @@ class UserSettingInputActivity : FragmentActivity() {
                                 }
                             )
 
+                            AllergenSelectSection(
+                                allAllergens = AllergenMockData.all,
+                                selectedAllergens = selectedAllergen,
+                                onToggle = { clickedValue ->
+                                    // Setの更新ロジック
+                                    selectedAllergen = if (selectedAllergen.contains(clickedValue)) {
+                                        selectedAllergen - clickedValue
+                                    } else {
+                                        selectedAllergen + clickedValue
+                                    }
+                                }
+                            )
+
                             StringListSetting (
                                 label = "嫌いな食材",
                                 chips = dislikesIngredients,
@@ -161,6 +176,7 @@ class UserSettingInputActivity : FragmentActivity() {
                             Text(text = dislikesIngredients.toString())
                             Text(text = dislikesDishes.toString())
                             Text(text = customAttributes.toString())
+                            Text(text = selectedAllergen.toString())
                         }
                     }
                 }
@@ -237,10 +253,11 @@ class UserSettingInputActivity : FragmentActivity() {
             content = {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier
                         .clickable { onButtonClick() }
                         .border(width = 1.dp, color = Color.Gray, shape = RoundedCornerShape(8.dp))
-                        .padding(10.dp)
+                        .padding(start = 20.dp, top = 8.dp, bottom = 8.dp, end = 20.dp)
                 ) {
                     Text(
                         text = currentDate,
