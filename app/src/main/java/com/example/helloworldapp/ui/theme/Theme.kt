@@ -13,18 +13,18 @@ import androidx.compose.ui.platform.LocalContext
 
 
 // Light Theme Colors
-val LightGreen =      Color(0xFF38A3A5)    // プライマリ: 信頼感のある青緑
-val LightYellow =     Color(0xFFF9A825)   // セカンダリ: ポジティブな印象の黄色
-val LightPink =       Color(0xFFE57373)     // ターシャリ/エラー: 注意を引く優しい赤
+val LightGreen =      Color(0xFF38A3A5) // プライマリ: 信頼感のある青緑
+val LightYellow =     Color(0xFFF9A825) // セカンダリ: ポジティブな印象の黄色
+val LightPink =       Color(0xFFE57373) // ターシャリ/エラー: 注意を引く優しい赤
 val LightBackground = Color(0xFFF7F9F9) // 背景: ほぼ白だが少し温かみのある色
-val LightSurface =    Color(0xFFFFFFFF)    // カードなどの表面: 純白
+val LightSurface =    Color(0xFFFFFFFF) // カードなどの表面: 純白
 
 // Dark Theme Colors
-val DarkGreen =      Color(0xFF57C9B8)     // プライマリ: ダークテーマで映える明るめの緑
-val DarkYellow =     Color(0xFFFFC107)    // セカンダリ: ダークテーマでも視認性の良い黄色
-val DarkPink =       Color(0xFFEF9A9A)      // ターシャリ/エラー: ダークテーマ用の優しい赤
-val DarkBackground = Color(0xFF121212)    // 背景: 標準的なダークカラー
-val DarkSurface =    Color(0xFF1E1E1E)     // カードなどの表面: 背景より少し明るいダークカラー
+val DarkGreen =      Color(0xFF57C9B8)  // プライマリ: ダークテーマで映える明るめの緑
+val DarkYellow =     Color(0xFFFFC107)  // セカンダリ: ダークテーマでも視認性の良い黄色
+val DarkPink =       Color(0xFFEF9A9A)  // ターシャリ/エラー: ダークテーマ用の優しい赤
+val DarkBackground = Color(0xFF181818)  // 背景: 標準的なダークカラー
+val DarkSurface =    Color(0xFF1E1E1E)  // カードなどの表面: 背景より少し明るいダークカラー
 
 
 private val DarkColorScheme = darkColorScheme(
