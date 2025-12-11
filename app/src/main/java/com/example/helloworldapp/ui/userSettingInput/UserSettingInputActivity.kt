@@ -56,11 +56,15 @@ import com.example.helloworldapp.ui.theme.HelloWorldAppTheme
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.time.LocalDate
+
 
 class UserSettingInputActivity : FragmentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
-    @OptIn(FlowPreview::class)
+    @OptIn(FlowPreview::class, ExperimentalSerializationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -200,8 +204,15 @@ class UserSettingInputActivity : FragmentActivity() {
                                         customAttributes = customAttributes,
                                         intakeTargetVersion = "2024_v1" // 仮の値
                                     )
+
+                                    // Json Format Setting
+                                    val prettyJson = Json {
+                                        prettyPrint = true
+                                        prettyPrintIndent = " "
+                                    }
+
                                     // 2. UserInputオブジェクトをJSON文字列に変換
-                                    userSettingJson = userInputData.toString()
+                                    userSettingJson = prettyJson.encodeToString(userInputData )
                                 }
                             ) {
                                 Text("現在の入力内容をJSONで表示")
