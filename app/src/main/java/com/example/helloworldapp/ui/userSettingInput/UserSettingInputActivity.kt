@@ -208,7 +208,7 @@ class UserSettingInputActivity : FragmentActivity() {
                                     // Json Format Setting
                                     val prettyJson = Json {
                                         prettyPrint = true
-                                        prettyPrintIndent = " "
+                                        prettyPrintIndent = "    "
                                     }
 
                                     // 2. UserInputオブジェクトをJSON文字列に変換
