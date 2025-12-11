@@ -2,9 +2,11 @@ package com.example.helloworldapp.ui.userSettingInput
 
 import AllergenSelectSection
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -27,6 +29,7 @@ import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -53,8 +56,10 @@ import com.example.helloworldapp.ui.theme.HelloWorldAppTheme
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import java.time.LocalDate
 
 class UserSettingInputActivity : FragmentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     @OptIn(FlowPreview::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +76,7 @@ class UserSettingInputActivity : FragmentActivity() {
             var dislikesIngredients by rememberSaveable { mutableStateOf(listOf<String>()) }
             var dislikesDishes by rememberSaveable { mutableStateOf(listOf<String>()) }
             var customAttributes by rememberSaveable { mutableStateOf(mapOf<String, String>("" to "")) }
+            var userSettingJson by remember { mutableStateOf("") }
 
 
             // hook
@@ -141,7 +147,8 @@ class UserSettingInputActivity : FragmentActivity() {
                                     } else {
                                         selectedAllergen + clickedValue
                                     }
-                                }
+                                },
+
                             )
 
                             StringListSetting (
@@ -169,14 +176,47 @@ class UserSettingInputActivity : FragmentActivity() {
                         }
 
                         // デバッグ用
-                        Column() {
-                            Text(text = userName.ifEmpty { "null" })
-                            Text(text = selectedDate)
-                            Text(text = selectedGender?.value ?: "null")
-                            Text(text = dislikesIngredients.toString())
-                            Text(text = dislikesDishes.toString())
-                            Text(text = customAttributes.toString())
-                            Text(text = selectedAllergen.toString())
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier.padding(16.dp)
+                        ) {
+                            Button(
+                                onClick = {
+                                    val birthDateLocalDate = try {
+                                        // "YYYY-MM-DD"形式の文字列をLocalDateにパース(解析)する
+                                        LocalDate.parse(selectedDate)
+                                    } catch (e: Exception) {
+                                        LocalDate.now() // 例として現在の日付を入れる
+                                    }
+
+                                    // 1. 各StateからUserInputインスタンスを生成
+                                    val userInputData = UserInput(
+                                        displayName = userName,
+                                        birthDate = birthDateLocalDate,
+                                        gender = selectedGender,
+                                        allergies = selectedAllergen,
+                                        dislikeIngredients = dislikesIngredients,
+                                        dislikeDishes = dislikesDishes,
+                                        customAttributes = customAttributes,
+                                        intakeTargetVersion = "2024_v1" // 仮の値
+                                    )
+                                    // 2. UserInputオブジェクトをJSON文字列に変換
+                                    userSettingJson = userInputData.toString()
+                                }
+                            ) {
+                                Text("現在の入力内容をJSONで表示")
+                            }
+                            // 3. JSON文字列を表示
+                            if (userSettingJson.isNotEmpty()) {
+                                Text(
+                                    text = userSettingJson,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .background(MaterialTheme.colorScheme.surfaceVariant)
+                                        .padding(8.dp),
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
                         }
                     }
                 }
