@@ -1,4 +1,4 @@
-package com.example.helloworldapp.feature.userSettingInput
+package com.example.helloworldapp.feature.setting
 
 /**
  * アレルギー品目データ

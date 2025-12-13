@@ -1,4 +1,4 @@
-package com.example.helloworldapp.feature.userSettingInput
+package com.example.helloworldapp.feature.setting
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

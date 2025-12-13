@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HelloWorldApp">
         <activity
-            android:name=".feature.userSettingInput.UserSettingInputActivity"
+            android:name=".feature.setting.UserSettingInputActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
