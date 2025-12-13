@@ -110,13 +110,13 @@ class UserSettingInputActivity : FragmentActivity() {
                                 currentUserName = userName
                             )
 
-                            BirthdaySetting(
+                            /*BirthdaySetting(
                                 currentDate = selectedDate,
                                 onButtonClick = {
                                     val dialog = DatePicker(datePickerCallback)
                                     dialog.show(supportFragmentManager, "datePicker")
                                 }
-                            )
+                            )*/
 
                             GenderSetting(
                                 selectedGender = selectedGender,
