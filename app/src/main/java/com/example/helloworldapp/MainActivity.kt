@@ -22,8 +22,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-fun changeActivity(context: Context) {
-    val intent = Intent(context, UserSettingInputActivity::class.java)
-    context.startActivity(intent)
-}
