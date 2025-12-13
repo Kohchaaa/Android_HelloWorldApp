@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import com.example.helloworldapp.feature.main.MainScreen
 import com.example.helloworldapp.ui.theme.HelloWorldAppTheme
 import com.example.helloworldapp.feature.setting.UserSettingInputActivity
+import com.example.helloworldapp.navigation.NavigationScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,7 +17,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             HelloWorldAppTheme {
-                MainScreen()
+                NavigationScreen()
             }
         }
     }

@@ -16,7 +16,11 @@ fun NavigationScreen() {
         startDestination = MainRoute,
     ) {
         composable<MainRoute> {
-            MainScreen()
+            MainScreen(
+                onNavigate = {
+                    navController.navigate(SettingRoute)
+                }
+            )
         }
 
         composable<SettingRoute> {

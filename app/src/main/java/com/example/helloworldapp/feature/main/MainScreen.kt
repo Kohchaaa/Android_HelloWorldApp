@@ -11,19 +11,21 @@ import androidx.compose.ui.platform.LocalContext
 import com.example.helloworldapp.changeActivity
 
 @Composable
-fun MainScreen(modifier: Modifier = Modifier) {
+fun MainScreen(
+    onNavigate: () -> Unit
+) {
     val context = LocalContext.current
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier
+            modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
             Greeting(
                 name = "kohcha",
             )
-            TestButton(label = "Go to UserInput", onClick = { changeActivity(context) })
+            TestButton(label = "Go to UserInput", onClick = { onNavigate() })
         }
     }
 }
