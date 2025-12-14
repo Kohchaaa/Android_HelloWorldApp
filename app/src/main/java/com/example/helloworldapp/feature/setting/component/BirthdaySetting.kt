@@ -23,12 +23,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.helloworldapp.R
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZoneId
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BirthdaySetting(
-    selectedDate: String,
+    selectedDate: LocalDate,
     onButtonClick: () -> Unit,
     dismissDatePicker: () -> Unit,
     onDateConfirm: (String) -> Unit,
@@ -47,7 +48,7 @@ fun BirthdaySetting(
                     .padding(start = 20.dp, top = 8.dp, bottom = 8.dp, end = 20.dp)
             ) {
                 Text(
-                    text = selectedDate,
+                    text = selectedDate.toString(),
                     textAlign = TextAlign.Center,
                 )
                 Icon(

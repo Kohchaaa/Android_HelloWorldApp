@@ -28,7 +28,7 @@ data class UserInput(
     val intakeTargetVersion: String =               "1.0"
 ) {
     companion object {
-        // ファクトリーメソッド
+        // ファクトリーメソッド的な
         fun createNew(): UserInput {
             return UserInput(
                 userId = UUID.randomUUID().toString(),
