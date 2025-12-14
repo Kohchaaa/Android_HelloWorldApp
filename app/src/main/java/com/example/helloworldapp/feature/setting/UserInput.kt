@@ -16,17 +16,28 @@ import java.util.UUID
 
 @Serializable
 data class UserInput(
-    val userId: String = UUID.randomUUID().toString(),
-    val displayName: String,
+    val userId:              String =               "",
+    val displayName:         String =               "",
     @Serializable(with = LocalDateSerializer::class)
-    val birthDate: LocalDate?,
-    val gender: Gender?,
-    val allergies: Set<String>,
-    val dislikeIngredients: List<String>,
-    val dislikeDishes: List<String>,
-    val customAttributes: Map<String, String>?, // Key-value形式で柔軟に選択肢して保存（カスタムアトリビュート型作った方が良いのかな）
-    val intakeTargetVersion: String
-)
+    val birthDate:           LocalDate? =           null,
+    val gender:              Gender? =              null,
+    val allergies:           Set<String> =          emptySet(),
+    val dislikeIngredients:  List<String> =         emptyList(),
+    val dislikeDishes:       List<String> =         emptyList(),
+    val customAttributes:    Map<String, String> =  emptyMap(),
+    val intakeTargetVersion: String =               "1.0"
+) {
+    companion object {
+        // ファクトリーメソッド
+        fun createNew(): UserInput {
+            return UserInput(
+                userId = UUID.randomUUID().toString(),
+                // その他の初期設定あれば
+                intakeTargetVersion = "1.0"
+            )
+        }
+    }
+}
 
 // 1. LocalDate用のカスタムシリアライザーを作成
 object LocalDateSerializer : KSerializer<LocalDate> {
