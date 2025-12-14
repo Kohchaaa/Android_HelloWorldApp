@@ -1,6 +1,8 @@
 package com.example.helloworldapp.feature.setting
 
 import AllergenSelectSection
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -40,10 +42,12 @@ import com.example.helloworldapp.ui.common.PageTitle
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import java.time.LocalDate
 
-@OptIn(ExperimentalMaterial3Api::class, FlowPreview::class)
+@RequiresApi(Build.VERSION_CODES.O)
+@OptIn(ExperimentalMaterial3Api::class, FlowPreview::class, ExperimentalSerializationApi::class)
 @Composable
 fun SettingScreen() {
     // state
@@ -179,7 +183,9 @@ fun SettingScreen() {
                         }
 
                         // 1. 各StateからUserInputインスタンスを生成
-                        val userInputData = UserInput(
+                        // 1. 各StateからUserInputインスタンスを生成
+                        var userInputData = UserInput.createNew()
+                        userInputData = UserInput(
                             displayName = userName,
                             birthDate = birthDateLocalDate,
                             gender = selectedGender,
