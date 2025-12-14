@@ -1,4 +1,4 @@
-package com.example.helloworldapp.feature.setting
+package com.example.helloworldapp.feature.setting.component
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource

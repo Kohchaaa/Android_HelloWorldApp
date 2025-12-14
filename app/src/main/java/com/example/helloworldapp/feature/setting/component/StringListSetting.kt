@@ -1,4 +1,4 @@
-package com.example.helloworldapp.feature.setting
+package com.example.helloworldapp.feature.setting.component
 
 import ChipTextField
 import androidx.compose.runtime.Composable

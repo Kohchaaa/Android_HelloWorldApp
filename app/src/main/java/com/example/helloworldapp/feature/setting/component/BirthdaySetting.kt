@@ -1,4 +1,4 @@
-package com.example.helloworldapp.feature.setting
+package com.example.helloworldapp.feature.setting.component
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.border
@@ -14,7 +14,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier

@@ -1,4 +1,4 @@
-package com.example.helloworldapp.feature.setting
+package com.example.helloworldapp.feature.setting.component
 
 enum class Gender(val value: String, val label: String) {
     MALE("male", "男性"),

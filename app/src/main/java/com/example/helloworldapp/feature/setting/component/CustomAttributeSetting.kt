@@ -1,4 +1,4 @@
-package com.example.helloworldapp.feature.setting
+package com.example.helloworldapp.feature.setting.component
 
 import MapDataInput
 import androidx.compose.runtime.Composable

@@ -33,6 +33,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
+import com.example.helloworldapp.feature.setting.component.AllergenMockData
+import com.example.helloworldapp.feature.setting.component.CustomAttributeSetting
+import com.example.helloworldapp.feature.setting.component.Gender
+import com.example.helloworldapp.feature.setting.component.GenderSetting
+import com.example.helloworldapp.feature.setting.component.StringListSetting
+import com.example.helloworldapp.feature.setting.component.UserNameSetting
+import com.example.helloworldapp.feature.setting.component.formatDate
 import com.example.helloworldapp.ui.common.PageTitle
 import com.example.helloworldapp.ui.theme.HelloWorldAppTheme
 import kotlinx.coroutines.FlowPreview
@@ -139,7 +146,7 @@ class UserSettingInputActivity : FragmentActivity() {
 
                             )
 
-                            StringListSetting (
+                            StringListSetting(
                                 label = "嫌いな食材",
                                 chips = dislikesIngredients,
                                 onChipsChange = { chips ->
@@ -147,7 +154,7 @@ class UserSettingInputActivity : FragmentActivity() {
                                 }
                             )
 
-                            StringListSetting (
+                            StringListSetting(
                                 label = "嫌いな料理",
                                 chips = dislikesDishes,
                                 onChipsChange = { dislikeDishes ->

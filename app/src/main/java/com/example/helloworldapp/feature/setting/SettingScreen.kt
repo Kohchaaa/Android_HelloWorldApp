@@ -28,6 +28,14 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.helloworldapp.feature.setting.component.AllergenMockData
+import com.example.helloworldapp.feature.setting.component.BirthdaySetting
+import com.example.helloworldapp.feature.setting.component.CustomAttributeSetting
+import com.example.helloworldapp.feature.setting.component.Gender
+import com.example.helloworldapp.feature.setting.component.GenderSetting
+import com.example.helloworldapp.feature.setting.component.StringListSetting
+import com.example.helloworldapp.feature.setting.component.UserNameSetting
+import com.example.helloworldapp.feature.setting.component.formatDate
 import com.example.helloworldapp.ui.common.PageTitle
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
@@ -132,7 +140,7 @@ fun SettingScreen() {
 
                     )
 
-                StringListSetting (
+                StringListSetting(
                     label = "嫌いな食材",
                     chips = dislikesIngredients,
                     onChipsChange = { chips ->
@@ -140,7 +148,7 @@ fun SettingScreen() {
                     }
                 )
 
-                StringListSetting (
+                StringListSetting(
                     label = "嫌いな料理",
                     chips = dislikesDishes,
                     onChipsChange = { dislikeDishes ->

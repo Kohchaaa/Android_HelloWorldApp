@@ -1,4 +1,4 @@
-package com.example.helloworldapp.feature.setting
+package com.example.helloworldapp.feature.setting.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

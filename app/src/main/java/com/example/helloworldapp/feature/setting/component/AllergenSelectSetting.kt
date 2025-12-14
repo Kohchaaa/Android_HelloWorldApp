@@ -8,8 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.helloworldapp.feature.setting.Allergen
-import com.example.helloworldapp.feature.setting.SettingItem
+import com.example.helloworldapp.feature.setting.component.Allergen
+import com.example.helloworldapp.feature.setting.component.SettingItem
 
 @Composable
 fun AllergenSelectSection(

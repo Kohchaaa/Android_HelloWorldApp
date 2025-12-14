@@ -2,6 +2,7 @@ package com.example.helloworldapp.feature.setting
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.example.helloworldapp.feature.setting.component.Gender
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
