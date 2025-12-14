@@ -15,6 +15,8 @@ fun NavigationScreen() {
         navController = navController,
         startDestination = MainRoute,
     ) {
+
+        // メイン画面
         composable<MainRoute> {
             MainScreen(
                 onNavigate = {
@@ -23,6 +25,7 @@ fun NavigationScreen() {
             )
         }
 
+        // 設定画面
         composable<SettingRoute> {
             SettingScreen()
         }
