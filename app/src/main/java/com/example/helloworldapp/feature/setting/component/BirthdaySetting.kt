@@ -1,6 +1,8 @@
 package com.example.helloworldapp.feature.setting.component
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +28,7 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BirthdaySetting(
@@ -95,6 +98,7 @@ fun formatDate(year: Int, month: Int, day: Int): String{
 }
 
 // ユーティリティ関数: ミリ秒 -> YYYY-MM-DD
+@RequiresApi(Build.VERSION_CODES.O)
 fun convertMillisToDateString(millis: Long): String {
     val localDate = Instant.ofEpochMilli(millis)
         .atZone(ZoneId.of("UTC")) // DatePickerはUTC基準なのでUTCで受ける
