@@ -19,22 +19,25 @@ import com.example.helloworldapp.ui.theme.HelloWorldAppTheme
 
 @Composable
 fun SettingItem(
-    itemName: String,
+    itemName: String? = null,
     content: @Composable () -> Unit,
     isRow: Boolean = false,
-    modifier: Modifier = Modifier
-        .fillMaxWidth()
 ) {
+    val modifier: Modifier = Modifier
+                                .fillMaxWidth()
+
     if(isRow) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = modifier
         ) {
-            Text(
-                text = itemName,
-                modifier = Modifier.padding(end = 16.dp)
-            )
+            if (itemName != null) {
+                Text(
+                    text = itemName,
+                    modifier = Modifier.padding(end = 16.dp)
+                )
+            }
             content()
         }
     } else {
@@ -43,17 +46,18 @@ fun SettingItem(
             horizontalAlignment = Alignment.Start,
             modifier = modifier
         ) {
-            Text(
-                text = itemName,
-                fontSize = 14.sp,
-                fontWeight = MaterialTheme.typography.titleMedium.fontWeight,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(end = 16.dp)
-            )
+            if (itemName != null) {
+                Text(
+                    text = itemName,
+                    fontSize = 14.sp,
+                    fontWeight = MaterialTheme.typography.titleMedium.fontWeight,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(end = 16.dp)
+                )
+            }
             content()
         }
     }
-
 }
 
 

@@ -21,7 +21,6 @@ fun AllergenSelectSection(
     val (mandatory, recommended) = allAllergens.partition { it.isMandatory }
 
     SettingItem(
-        itemName = "アレルギー",
         isRow = false,
         content = {
             Column {
