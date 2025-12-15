@@ -1,7 +1,6 @@
 package com.example.helloworldapp.feature.setting
 
 import AllergenSelectSection
-import android.R.id.input
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
@@ -36,11 +35,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.helloworldapp.feature.setting.component.AllergenMockData
 import com.example.helloworldapp.feature.setting.component.BirthdaySetting
 import com.example.helloworldapp.feature.setting.component.CustomAttributeSetting
-import com.example.helloworldapp.feature.setting.component.Gender
 import com.example.helloworldapp.feature.setting.component.GenderSetting
 import com.example.helloworldapp.feature.setting.component.StringListSetting
 import com.example.helloworldapp.feature.setting.component.UserNameSetting
-import com.example.helloworldapp.feature.setting.component.formatDate
 import com.example.helloworldapp.feature.setting.viewmodel.SettingUiState
 import com.example.helloworldapp.feature.setting.viewmodel.SettingViewModel
 import com.example.helloworldapp.ui.common.PageTitle
@@ -57,16 +54,6 @@ import java.time.LocalDate
 fun SettingScreen(
     viewModel: SettingViewModel = viewModel()
 ) {
-    // state
-    /*
-    var userName by rememberSaveable { mutableStateOf("") }
-    var selectedDate by rememberSaveable { mutableStateOf("YYYY-MM-DD") }
-    var selectedGender by rememberSaveable { mutableStateOf<Gender?>(null) }
-    var selectedAllergen by rememberSaveable { mutableStateOf( setOf<String>()) }
-    var dislikesIngredients by rememberSaveable { mutableStateOf(listOf<String>()) }
-    var dislikesDishes by rememberSaveable { mutableStateOf(listOf<String>()) }
-    var customAttributes by rememberSaveable { mutableStateOf(mapOf<String, String>("" to "")) }*/
-
     // これで外にあるデータをStateとしてインポートできる
     val uiState by viewModel.uiState.collectAsState()
 
@@ -79,6 +66,7 @@ fun SettingScreen(
 }
 
 // 分離したことでプレビューもしやすくなる
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(FlowPreview::class, ExperimentalMaterial3Api::class, ExperimentalSerializationApi::class)
 @Composable
 fun SettingScreenContent(
@@ -109,7 +97,6 @@ fun SettingScreenContent(
         onUpdateInput {
             it.copy(birthDate = LocalDate.of(year, month, day))
         }
-        // birthDate = formatDate(year, month, day)
     }
 
 
@@ -176,12 +163,6 @@ fun SettingScreenContent(
                             }
                             input.copy(allergies = newSet)
                         }
-
-                        /*selectedAllergen = if (selectedAllergen.contains(clickedValue)) {
-                            selectedAllergen - clickedValue
-                        } else {
-                            selectedAllergen + clickedValue
-                        }*/
                     }
                 )
 
@@ -216,12 +197,6 @@ fun SettingScreenContent(
             ) {
                 Button(
                     onClick = {
-                        /*val birthDateLocalDate = try {
-                            // "YYYY-MM-DD"形式の文字列をLocalDateにパース(解析)する
-                            LocalDate.parse(selectedDate)
-                        } catch (e: Exception) {
-                            LocalDate.now() // 例として現在の日付を入れる
-                        }*/
 
                         // 1. uiStateのsetting項目からデータを作成
                         val userInputData = currentInput
