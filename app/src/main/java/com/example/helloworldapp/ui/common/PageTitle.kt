@@ -1,5 +1,6 @@
 package com.example.helloworldapp.ui.common
 
+import android.R.attr.fontWeight
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,6 +25,7 @@ fun PageTitle(title: String) {
         Text(
             text = title,
             fontSize = 24.sp,
+            fontWeight = MaterialTheme.typography.titleLarge.fontWeight,
             color = MaterialTheme.colorScheme.onPrimary
         )
     }

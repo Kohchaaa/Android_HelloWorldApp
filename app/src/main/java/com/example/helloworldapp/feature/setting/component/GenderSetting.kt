@@ -2,6 +2,7 @@ package com.example.helloworldapp.feature.setting.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,16 +25,17 @@ fun GenderSetting(
         itemName = "性別",
         content = {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Gender.entries.forEach { gender ->
                     OutlinedIconToggleButton(
                         checked = gender == selectedGender,
                         onCheckedChange = { onGenderSelected(gender) },
                         modifier = Modifier
-                            .height(40.dp)
-                            .width(60.dp),
-                        shape = RoundedCornerShape(8.dp),
+                            .height(50.dp)
+                            .weight(1f),
+                        shape = RoundedCornerShape(12.dp),
                         colors = IconButtonDefaults.outlinedIconToggleButtonColors(
                             containerColor = MaterialTheme.colorScheme.surface,
                             checkedContainerColor = MaterialTheme.colorScheme.primary,

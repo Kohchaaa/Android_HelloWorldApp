@@ -13,6 +13,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -36,6 +41,7 @@ import com.example.helloworldapp.feature.setting.component.AllergenMockData
 import com.example.helloworldapp.feature.setting.component.BirthdaySetting
 import com.example.helloworldapp.feature.setting.component.CustomAttributeSetting
 import com.example.helloworldapp.feature.setting.component.GenderSetting
+import com.example.helloworldapp.feature.setting.component.SettingCategory
 import com.example.helloworldapp.feature.setting.component.StringListSetting
 import com.example.helloworldapp.feature.setting.component.UserNameSetting
 import com.example.helloworldapp.feature.setting.viewmodel.SettingUiState
@@ -108,7 +114,7 @@ fun SettingScreenContent(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
-                .background(color = MaterialTheme.colorScheme.background)
+                .background(color = MaterialTheme.colorScheme.surface)
                 .imePadding()
         ) {
             // 設定項目
@@ -122,72 +128,93 @@ fun SettingScreenContent(
 
                 PageTitle(title = "設定")
 
-                UserNameSetting(
-                    userName = userNameState,
-                    currentUserName = currentInput.displayName
-                )
+                SettingCategory(
+                    categoryName = "ユーザー設定",
+                    categoryIcon = Icons.Default.AccountCircle
+                ) {
+                    UserNameSetting(
+                        userName = userNameState,
+                        currentUserName = currentInput.displayName
+                    )
 
-                BirthdaySetting(
-                    selectedDate = currentInput.birthDate ?: LocalDate.now(),
-                    onButtonClick = {
-                        isShowDatePicker = true
-                    },
-                    dismissDatePicker = {
-                        isShowDatePicker = false
-                    },
-                    onDateConfirm = { newDate ->
-                        onUpdateInput { it.copy(birthDate = LocalDate.parse(newDate)) }
-                    },
-                    isShowDialog = isShowDatePicker,
-                    datePickerState = dataPickerState
-                )
-
-                GenderSetting(
-                    selectedGender = currentInput.gender,
-                    onGenderSelected = { newGender ->
-                        onUpdateInput { it.copy(gender = newGender) }
-                    }
-                )
-
-                AllergenSelectSection(
-                    allAllergens = AllergenMockData.all,
-                    selectedAllergens = uiState.setting.allergies,
-                    onToggle = { clickedValue ->
-                        // Setの更新ロジック
-                        onUpdateInput { input ->
-                            val currentSet = input.allergies
-                            val newSet = if (currentSet.contains(clickedValue)) {
-                                currentSet - clickedValue
-                            } else {
-                                currentSet + clickedValue
-                            }
-                            input.copy(allergies = newSet)
+                    BirthdaySetting(
+                        selectedDate = currentInput.birthDate ?: LocalDate.now(),
+                        onButtonClick = {
+                            isShowDatePicker = true
+                        },
+                        dismissDatePicker = {
+                            isShowDatePicker = false
+                        },
+                        onDateConfirm = { newDate ->
+                            onUpdateInput { it.copy(birthDate = LocalDate.parse(newDate)) }
+                        },
+                        isShowDialog = isShowDatePicker,
+                        datePickerState = dataPickerState
+                    )
+                    GenderSetting(
+                        selectedGender = currentInput.gender,
+                        onGenderSelected = { newGender ->
+                            onUpdateInput { it.copy(gender = newGender) }
                         }
-                    }
-                )
+                    )
+                }
 
-                StringListSetting(
-                    label = "嫌いな食材",
-                    chips = currentInput.dislikeIngredients,
-                    onChipsChange = { chips ->
-                        onUpdateInput { it.copy(dislikeIngredients = chips) }
-                    }
-                )
 
-                StringListSetting(
-                    label = "嫌いな料理",
-                    chips = currentInput.dislikeDishes,
-                    onChipsChange = { dislikeDishes ->
-                        onUpdateInput { it.copy(dislikeDishes = dislikeDishes) }
-                    }
-                )
+                SettingCategory(
+                    categoryName = "アレルギー",
+                    categoryIcon = Icons.Default.Warning
+                ) {
+                    AllergenSelectSection(
+                        allAllergens = AllergenMockData.all,
+                        selectedAllergens = uiState.setting.allergies,
+                        onToggle = { clickedValue ->
+                            // Setの更新ロジック
+                            onUpdateInput { input ->
+                                val currentSet = input.allergies
+                                val newSet = if (currentSet.contains(clickedValue)) {
+                                    currentSet - clickedValue
+                                } else {
+                                    currentSet + clickedValue
+                                }
+                                input.copy(allergies = newSet)
+                            }
+                        }
+                    )
+                }
 
-                CustomAttributeSetting(
-                    customAttributes = currentInput.customAttributes,
-                    onDataChange = { newAttribute ->
-                        onUpdateInput { it.copy(customAttributes = newAttribute) }
-                    }
-                )
+                SettingCategory(
+                    categoryName = "きらいなもの",
+                    categoryIcon = Icons.Default.Clear
+                ) {
+                    StringListSetting(
+                        label = "嫌いな食材",
+                        chips = currentInput.dislikeIngredients,
+                        onChipsChange = { chips ->
+                            onUpdateInput { it.copy(dislikeIngredients = chips) }
+                        }
+                    )
+
+                    StringListSetting(
+                        label = "嫌いな料理",
+                        chips = currentInput.dislikeDishes,
+                        onChipsChange = { dislikeDishes ->
+                            onUpdateInput { it.copy(dislikeDishes = dislikeDishes) }
+                        }
+                    )
+                }
+
+                SettingCategory(
+                    categoryName = "カスタム属性",
+                    categoryIcon = Icons.Default.Build
+                ) {
+                    CustomAttributeSetting(
+                        customAttributes = currentInput.customAttributes,
+                        onDataChange = { newAttribute ->
+                            onUpdateInput { it.copy(customAttributes = newAttribute) }
+                        }
+                    )
+                }
+
             }
 
             // デバッグ用
