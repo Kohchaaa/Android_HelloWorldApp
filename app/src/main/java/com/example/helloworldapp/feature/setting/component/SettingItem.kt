@@ -23,8 +23,8 @@ fun SettingItem(
     content: @Composable () -> Unit,
     isRow: Boolean = false,
 ) {
-    val modifier: Modifier = Modifier
-                                .fillMaxWidth()
+    val modifier: Modifier
+        = Modifier.fillMaxWidth()
 
     if(isRow) {
         Row(
