@@ -77,7 +77,7 @@ fun SettingScreen(
 @Composable
 fun SettingScreenContent(
     uiState: SettingUiState,
-    onUpdateInput: ((UserInput) -> UserInput) -> Unit
+    onUpdateInput: ((UserSetting) -> UserSetting) -> Unit
 ){
     // uiStateの取り出し
     val currentInput = uiState.setting

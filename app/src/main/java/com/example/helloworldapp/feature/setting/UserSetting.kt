@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter
 import java.util.UUID
 
 @Serializable
-data class UserInput(
+data class UserSetting(
     val userId:              String =               "",
     val displayName:         String =               "",
     @Serializable(with = LocalDateSerializer::class)
@@ -29,8 +29,8 @@ data class UserInput(
 ) {
     companion object {
         // ファクトリーメソッド的な
-        fun createNew(): UserInput {
-            return UserInput(
+        fun createNew(): UserSetting {
+            return UserSetting(
                 userId = UUID.randomUUID().toString(),
                 // その他の初期設定あれば
                 intakeTargetVersion = "1.0"

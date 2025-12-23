@@ -1,8 +1,8 @@
 package com.example.helloworldapp.feature.setting.viewmodel
 
-import com.example.helloworldapp.feature.setting.UserInput
+import com.example.helloworldapp.feature.setting.UserSetting
 
 data class SettingUiState(
     val isLoading: Boolean = false,
-    val setting: UserInput = UserInput.createNew()
+    val setting: UserSetting = UserSetting.createNew()
 )

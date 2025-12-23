@@ -185,7 +185,7 @@ class UserSettingInputActivity : FragmentActivity() {
                                     }
 
                                     // 1. 各StateからUserInputインスタンスを生成
-                                    val userInputData = UserInput(
+                                    val userSettingData = UserSetting(
                                         displayName = userName,
                                         birthDate = birthDateLocalDate,
                                         gender = selectedGender,
@@ -203,7 +203,7 @@ class UserSettingInputActivity : FragmentActivity() {
                                     }
 
                                     // 2. UserInputオブジェクトをJSON文字列に変換
-                                    userSettingJson = prettyJson.encodeToString(userInputData )
+                                    userSettingJson = prettyJson.encodeToString(userSettingData )
                                 }
                             ) {
                                 Text("現在の入力内容をJSONで表示")

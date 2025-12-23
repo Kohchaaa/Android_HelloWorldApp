@@ -1,7 +1,7 @@
 package com.example.helloworldapp.feature.setting.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.example.helloworldapp.feature.setting.UserInput
+import com.example.helloworldapp.feature.setting.UserSetting
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -35,7 +35,7 @@ class SettingViewModel: ViewModel() {
      * @param transformFunc 更新ロジックをラムダ式で受け取る
      * @return Unit
      */
-    fun updateUserInput(transformFunc: (UserInput) -> UserInput) {
+    fun updateUserInput(transformFunc: (UserSetting) -> UserSetting) {
         _uiState.update { currentState ->
             currentState.copy(
                 setting = transformFunc(currentState.setting)
