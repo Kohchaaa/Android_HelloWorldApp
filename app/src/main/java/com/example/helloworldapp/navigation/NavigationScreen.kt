@@ -22,7 +22,7 @@ fun NavigationScreen() {
         // メイン画面
         composable<MainRoute> {
             MainScreen(
-                onNavigate = {
+                onNavigateUserSetting = {
                     navController.navigate(SettingRoute)
                 }
             )

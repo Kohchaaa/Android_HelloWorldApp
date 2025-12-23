@@ -11,7 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun MainScreen(
-    onNavigate: () -> Unit
+    onNavigateUserSetting : () -> Unit
 ) {
     val context = LocalContext.current
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -24,7 +24,7 @@ fun MainScreen(
             Greeting(
                 name = "kohcha",
             )
-            TestButton(label = "Go to UserInput", onClick = { onNavigate() })
+            TestButton(label = "Go to UserInput", onClick = { onNavigateUserSetting() })
         }
     }
 }
