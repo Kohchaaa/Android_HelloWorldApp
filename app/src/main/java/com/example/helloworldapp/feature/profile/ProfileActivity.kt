@@ -1,4 +1,4 @@
-package com.example.helloworldapp.feature.setting
+package com.example.helloworldapp.feature.profile
 
 import AllergenSelectSection
 import android.os.Build
@@ -33,13 +33,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
-import com.example.helloworldapp.feature.setting.component.AllergenMockData
-import com.example.helloworldapp.feature.setting.component.CustomAttributeSetting
-import com.example.helloworldapp.feature.setting.component.Gender
-import com.example.helloworldapp.feature.setting.component.GenderSetting
-import com.example.helloworldapp.feature.setting.component.StringListSetting
-import com.example.helloworldapp.feature.setting.component.UserNameSetting
-import com.example.helloworldapp.feature.setting.component.formatDate
+import com.example.helloworldapp.feature.profile.component.AllergenMockData
+import com.example.helloworldapp.feature.profile.component.CustomAttributeSetting
+import com.example.helloworldapp.feature.profile.component.Gender
+import com.example.helloworldapp.feature.profile.component.GenderSetting
+import com.example.helloworldapp.feature.profile.component.StringListSetting
+import com.example.helloworldapp.feature.profile.component.UserNameSetting
+import com.example.helloworldapp.feature.profile.component.formatDate
 import com.example.helloworldapp.ui.common.PageTitle
 import com.example.helloworldapp.ui.theme.HelloWorldAppTheme
 import kotlinx.coroutines.FlowPreview
@@ -50,7 +50,7 @@ import kotlinx.serialization.json.Json
 import java.time.LocalDate
 
 
-class UserSettingInputActivity : FragmentActivity() {
+class ProfileActivity : FragmentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     @OptIn(FlowPreview::class, ExperimentalSerializationApi::class, ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -185,7 +185,7 @@ class UserSettingInputActivity : FragmentActivity() {
                                     }
 
                                     // 1. 各StateからUserInputインスタンスを生成
-                                    val userSettingData = UserSetting(
+                                    val userProfileData = UserProfile(
                                         displayName = userName,
                                         birthDate = birthDateLocalDate,
                                         gender = selectedGender,
@@ -203,7 +203,7 @@ class UserSettingInputActivity : FragmentActivity() {
                                     }
 
                                     // 2. UserInputオブジェクトをJSON文字列に変換
-                                    userSettingJson = prettyJson.encodeToString(userSettingData )
+                                    userSettingJson = prettyJson.encodeToString(userProfileData )
                                 }
                             ) {
                                 Text("現在の入力内容をJSONで表示")

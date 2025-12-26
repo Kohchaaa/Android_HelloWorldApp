@@ -1,8 +1,5 @@
-package com.example.helloworldapp.feature.setting.component
+package com.example.helloworldapp.feature.profile.component
 
-import android.R.attr.lineHeight
-import android.util.Log.e
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,9 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.modifier.ModifierLocalReadScope
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.helloworldapp.ui.theme.HelloWorldAppTheme

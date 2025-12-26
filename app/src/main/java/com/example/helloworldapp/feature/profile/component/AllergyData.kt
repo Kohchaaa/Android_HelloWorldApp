@@ -1,4 +1,4 @@
-package com.example.helloworldapp.feature.setting.component
+package com.example.helloworldapp.feature.profile.component
 
 /**
  * アレルギー品目データ

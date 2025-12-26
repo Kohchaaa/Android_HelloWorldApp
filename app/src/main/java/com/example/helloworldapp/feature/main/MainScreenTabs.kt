@@ -5,11 +5,10 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.helloworldapp.navigation.CalendarRoute
 import com.example.helloworldapp.navigation.HomeRoute
-import com.example.helloworldapp.navigation.SettingRoute
+import com.example.helloworldapp.navigation.ProfileRoute
 import com.example.helloworldapp.navigation.SuggestRoute
 import kotlin.reflect.KClass
 
@@ -37,10 +36,10 @@ enum class MainScreenTabs(
         icon = Icons.Default.Notifications,
         label = "Suggest"
     ),
-    Setting(
-        route = SettingRoute,
-        routeClass = SettingRoute::class,
+    UserSetting(
+        route = ProfileRoute,
+        routeClass = ProfileRoute::class,
         icon = Icons.Default.AccountCircle,
-        label = "Setting"
+        label = "Profile"
     )
 }

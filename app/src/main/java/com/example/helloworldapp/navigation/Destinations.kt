@@ -17,4 +17,4 @@ object CalendarRoute
 object SuggestRoute
 
 @Serializable
-object SettingRoute
+object ProfileRoute

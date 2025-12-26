@@ -55,7 +55,7 @@ fun NavigationBarPreview() {
             ) {
                 Box(modifier = Modifier.padding(it))
                 MainScreen(
-                    onNavigateUserSetting = {}
+                    onNavigateSetting = {}
                 )
             }
 

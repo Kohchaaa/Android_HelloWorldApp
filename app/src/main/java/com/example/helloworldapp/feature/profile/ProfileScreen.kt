@@ -1,4 +1,4 @@
-package com.example.helloworldapp.feature.setting
+package com.example.helloworldapp.feature.profile
 
 import AllergenSelectSection
 import android.os.Build
@@ -37,15 +37,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.helloworldapp.feature.setting.component.AllergenMockData
-import com.example.helloworldapp.feature.setting.component.BirthdaySetting
-import com.example.helloworldapp.feature.setting.component.CustomAttributeSetting
-import com.example.helloworldapp.feature.setting.component.GenderSetting
-import com.example.helloworldapp.feature.setting.component.SettingCategory
-import com.example.helloworldapp.feature.setting.component.StringListSetting
-import com.example.helloworldapp.feature.setting.component.UserNameSetting
-import com.example.helloworldapp.feature.setting.viewmodel.SettingUiState
-import com.example.helloworldapp.feature.setting.viewmodel.SettingViewModel
+import com.example.helloworldapp.feature.profile.component.AllergenMockData
+import com.example.helloworldapp.feature.profile.component.BirthdaySetting
+import com.example.helloworldapp.feature.profile.component.CustomAttributeSetting
+import com.example.helloworldapp.feature.profile.component.GenderSetting
+import com.example.helloworldapp.feature.profile.component.SettingCategory
+import com.example.helloworldapp.feature.profile.component.StringListSetting
+import com.example.helloworldapp.feature.profile.component.UserNameSetting
+import com.example.helloworldapp.feature.profile.viewmodel.ProfileScreenUiState
+import com.example.helloworldapp.feature.profile.viewmodel.ProfileViewModel
 import com.example.helloworldapp.ui.common.PageTitle
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
@@ -58,15 +58,15 @@ import java.time.LocalDate
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalSerializationApi::class)
 @Composable
-fun SettingScreen(
-    viewModel: SettingViewModel = viewModel()
+fun ProfileScreen(
+    viewModel: ProfileViewModel = viewModel()
 ) {
     // これで外にあるデータをStateとしてインポートできる
     val uiState by viewModel.uiState.collectAsState()
 
-    SettingScreenContent(
+    ProfileScreenContent(
         uiState = uiState,
-        onUpdateInput = viewModel::updateUserInput
+        onUpdateInput = viewModel::updateUserProfile
     )
 
 
@@ -76,9 +76,9 @@ fun SettingScreen(
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(FlowPreview::class, ExperimentalMaterial3Api::class, ExperimentalSerializationApi::class)
 @Composable
-fun SettingScreenContent(
-    uiState: SettingUiState,
-    onUpdateInput: ((UserSetting) -> UserSetting) -> Unit
+fun ProfileScreenContent(
+    uiState: ProfileScreenUiState,
+    onUpdateInput: ((UserProfile) -> UserProfile) -> Unit
 ){
 
     var isVisible by remember { mutableStateOf(false) }

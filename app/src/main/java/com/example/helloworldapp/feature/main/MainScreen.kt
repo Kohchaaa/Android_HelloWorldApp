@@ -14,20 +14,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.helloworldapp.feature.setting.SettingScreen
+import com.example.helloworldapp.feature.profile.ProfileScreen
 import com.example.helloworldapp.navigation.CalendarRoute
 import com.example.helloworldapp.navigation.HomeRoute
-import com.example.helloworldapp.navigation.SettingRoute
+import com.example.helloworldapp.navigation.ProfileRoute
 import com.example.helloworldapp.navigation.SuggestRoute
 
 @Composable
 fun MainScreen(
-    onNavigateUserSetting : () -> Unit
+    onNavigateSetting : () -> Unit
 ) {
     val mainNavController = rememberNavController()
     val navBackStackEntry by mainNavController.currentBackStackEntryAsState()
@@ -55,7 +54,7 @@ fun MainScreen(
         ) {
             composable<HomeRoute> {
                 HomeScreen(
-                    onNavigateUserSetting = onNavigateUserSetting
+                    onNavigateSetting = onNavigateSetting
                 )
             }
 
@@ -69,8 +68,8 @@ fun MainScreen(
                 //SuggestScreen()
             }
 
-            composable<SettingRoute> {
-                SettingScreen()
+            composable<ProfileRoute> {
+                ProfileScreen()
             }
         }
 
@@ -80,7 +79,7 @@ fun MainScreen(
 
 @Composable
 fun HomeScreen(
-    onNavigateUserSetting: () -> Unit
+    onNavigateSetting: () -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -91,6 +90,6 @@ fun HomeScreen(
         Greeting(
             name = "kohcha",
         )
-        TestButton(label = "Go to UserInput", onClick = { onNavigateUserSetting() })
+        TestButton(label = "Go to UserInput", onClick = { onNavigateSetting() })
     }
 }

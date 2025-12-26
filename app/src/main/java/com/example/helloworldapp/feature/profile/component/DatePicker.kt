@@ -1,4 +1,4 @@
-package com.example.helloworldapp.feature.setting.component
+package com.example.helloworldapp.feature.profile.component
 
 import android.app.DatePickerDialog
 import android.app.Dialog

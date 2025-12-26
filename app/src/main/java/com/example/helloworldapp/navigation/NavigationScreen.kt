@@ -4,8 +4,6 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
@@ -16,7 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.example.helloworldapp.feature.main.MainScreen
-import com.example.helloworldapp.feature.setting.SettingScreen
+import com.example.helloworldapp.feature.profile.ProfileScreen
 
 // ■ アニメーションの時間（ms）
 // iOSはもっと速いですが、パララックスを目立たせるなら400-500msくらいがリッチに見えます
@@ -49,11 +47,11 @@ fun NavigationScreen() {
 
         // メイン画面
         mainScreen(
-            { navController.navigate(SettingRoute) }
+            { navController.navigate(ProfileRoute) }
         )
 
         // 設定画面
-        composable<SettingRoute>(
+        composable<ProfileRoute>(
             // 右から入ってくる
             enterTransition = {
                 slideInHorizontally(
@@ -69,7 +67,7 @@ fun NavigationScreen() {
                 )
             }
         ) {
-            SettingScreen()
+            ProfileScreen()
         }
     }
 }
@@ -99,7 +97,7 @@ private fun NavGraphBuilder.mainScreen(
             }
         ){
             MainScreen(
-                onNavigateUserSetting = onNavigateUserSetting
+                onNavigateSetting = onNavigateUserSetting
             )
         }
     }

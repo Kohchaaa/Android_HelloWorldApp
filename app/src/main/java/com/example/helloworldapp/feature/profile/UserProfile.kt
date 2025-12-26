@@ -1,8 +1,8 @@
-package com.example.helloworldapp.feature.setting
+package com.example.helloworldapp.feature.profile
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.example.helloworldapp.feature.setting.component.Gender
+import com.example.helloworldapp.feature.profile.component.Gender
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter
 import java.util.UUID
 
 @Serializable
-data class UserSetting(
+data class UserProfile(
     val userId:              String =               "",
     val displayName:         String =               "",
     @Serializable(with = LocalDateSerializer::class)
@@ -29,8 +29,8 @@ data class UserSetting(
 ) {
     companion object {
         // ファクトリーメソッド的な
-        fun createNew(): UserSetting {
-            return UserSetting(
+        fun createNew(): UserProfile {
+            return UserProfile(
                 userId = UUID.randomUUID().toString(),
                 // その他の初期設定あれば
                 intakeTargetVersion = "1.0"
