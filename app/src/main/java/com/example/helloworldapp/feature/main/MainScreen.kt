@@ -20,6 +20,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.helloworldapp.feature.calendar.AICalendar
 import com.example.helloworldapp.feature.home.HomeScreen
 import com.example.helloworldapp.feature.profile.ProfileScreen
 import com.example.helloworldapp.navigation.CalendarRoute
@@ -64,6 +65,7 @@ fun MainScreen(
 
             composable<CalendarRoute> {
                 CalendarScreen()
+                //AICalendar()
             }
 
             composable<SuggestRoute> {
