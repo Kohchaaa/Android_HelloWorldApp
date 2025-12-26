@@ -19,8 +19,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.helloworldapp.feature.setting.SettingScreen
 import com.example.helloworldapp.navigation.CalendarRoute
 import com.example.helloworldapp.navigation.HomeRoute
+import com.example.helloworldapp.navigation.SettingRoute
 import com.example.helloworldapp.navigation.SuggestRoute
 
 @Composable
@@ -65,6 +67,10 @@ fun MainScreen(
             composable<SuggestRoute> {
                 Text("Suggest")
                 //SuggestScreen()
+            }
+
+            composable<SettingRoute> {
+                SettingScreen()
             }
         }
 
