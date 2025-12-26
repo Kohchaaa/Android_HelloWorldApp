@@ -21,6 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.helloworldapp.feature.profile.ProfileScreen
 import com.example.helloworldapp.navigation.CalendarRoute
 import com.example.helloworldapp.navigation.HomeRoute
+import com.example.helloworldapp.navigation.NavigationBar
 import com.example.helloworldapp.navigation.ProfileRoute
 import com.example.helloworldapp.navigation.SuggestRoute
 
@@ -37,7 +38,8 @@ fun MainScreen(
             NavigationBar(
                 currentDestination = currentDestination,
                 onNavigateOtherTab = { destination -> mainNavController.navigate(destination) }
-            ) },
+            )
+        },
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)

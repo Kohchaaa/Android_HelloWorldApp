@@ -1,4 +1,4 @@
-package com.example.helloworldapp.feature.main
+package com.example.helloworldapp.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
+import com.example.helloworldapp.feature.main.MainScreen
+import com.example.helloworldapp.feature.main.MainScreenTabs
 import com.example.helloworldapp.ui.theme.HelloWorldAppTheme
 
 @Composable

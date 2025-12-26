@@ -119,7 +119,6 @@ fun ProfileScreenContent(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
-                .background(color = MaterialTheme.colorScheme.surface)
                 .imePadding()
         ) {
             // 設定項目
