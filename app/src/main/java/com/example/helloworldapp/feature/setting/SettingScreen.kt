@@ -109,18 +109,11 @@ fun SettingScreenContent(
             }
     }
 
-    // function
-    val datePickerCallback = { year: Int, month: Int, day: Int ->
-        onUpdateInput {
-            it.copy(birthDate = LocalDate.of(year, month, day))
-        }
-    }
-
 
     Scaffold(modifier = Modifier
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.background)
-    ) { innerPadding ->
+    ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -135,7 +128,6 @@ fun SettingScreenContent(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(innerPadding)
             ) {
 
                 PageTitle(title = "設定")
