@@ -7,7 +7,10 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,6 +36,8 @@ fun CalendarScreen(
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.background)
     ) {
+        var selectedDate by remember { mutableStateOf(LocalDate.now()) }
+
         val currentMonth = remember { YearMonth.now() }
         val startMonth = remember { currentMonth.minusMonths(24) }
         val endMonth = remember { currentMonth.plusMonths(1) }
@@ -71,7 +76,9 @@ fun CalendarScreen(
             MealCalendar(
                 mealStatus = mealStatus,
                 state = state,
-                daysOfWeek = daysOfWeek
+                daysOfWeek = daysOfWeek,
+                selectedDate = selectedDate,
+                onDateSelected = { selectedDate = it }
             )
 
             HorizontalDivider(thickness = 2.dp)
