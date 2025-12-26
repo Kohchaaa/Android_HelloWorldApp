@@ -18,6 +18,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.helloworldapp.feature.home.HomeScreen
 import com.example.helloworldapp.feature.profile.ProfileScreen
 import com.example.helloworldapp.navigation.CalendarRoute
 import com.example.helloworldapp.navigation.HomeRoute
@@ -75,22 +76,5 @@ fun MainScreen(
         }
 
 
-    }
-}
-
-@Composable
-fun HomeScreen(
-    onNavigateSetting: () -> Unit
-) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-
-        Greeting(
-            name = "kohcha",
-        )
-        TestButton(label = "Go to UserInput", onClick = { onNavigateSetting() })
     }
 }
