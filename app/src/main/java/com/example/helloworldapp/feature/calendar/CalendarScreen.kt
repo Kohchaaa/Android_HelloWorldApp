@@ -6,10 +6,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.helloworldapp.data.mock.mockMealRecord
 import com.example.helloworldapp.feature.calendar.DailyMealStatus
 import com.example.helloworldapp.feature.calendar.MealCalendar
 import com.example.helloworldapp.type.MealType
+import com.example.helloworldapp.ui.theme.HelloWorldAppTheme
 import com.kizitonwose.calendar.compose.rememberCalendarState
 import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
@@ -55,7 +57,7 @@ fun CalendarScreen(
             }
 
         MealCalendar(
-            mealRecords = mealRecord,
+            mealStatus = mealStatus,
             state = state,
             daysOfWeek = daysOfWeek
         )
