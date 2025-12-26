@@ -19,6 +19,8 @@ val LightPink =       Color(0xFFE57373) // ターシャリ/エラー: 注意を�
 val LightBackground = Color(0xFFF7F9F9) // 背景: ほぼ白だが少し温かみのある色
 val LightSurface =    Color(0xFFFFFFFF) // カードなどの表面: 純白
 val LightOnSurfaceVariant = Color(0xFF595959) // 薄い文字用の色 (ライトテーマ用)
+val LightPrimaryContainer = Color(0xFFC2E8E8)
+val LightOnPrimaryContainer = Color(0xFF002021)
 
 // Dark Theme Colors
 val DarkGreen =      Color(0xFF57C9B8)  // プライマリ: ダークテーマで映える明るめの緑
@@ -27,6 +29,8 @@ val DarkPink =       Color(0xFFEF9A9A)  // ターシャリ/エラー: ダーク�
 val DarkBackground = Color(0xFF181818)  // 背景: 標準的なダークカラー
 val DarkSurface =    Color(0xFF1E1E1E)  // カードなどの表面: 背景より少し明るいダークカラー
 val DarkOnSurfaceVariant = Color(0xFFD0D0D0) // 薄い文字用の色 (ダークテーマ用)
+val DarkPrimaryContainer =  Color(0xFF3D4D4C)
+val DarkOnPrimaryContainer =  Color(0xFFBEEBE4)
 
 
 private val DarkColorScheme = darkColorScheme(
@@ -40,7 +44,9 @@ private val DarkColorScheme = darkColorScheme(
     onTertiary =   Color.Black,
     onBackground = Color(0xFFE6E6E6), // ほぼ白
     onSurface =    Color(0xFFE6E6E6),
-    onSurfaceVariant = DarkOnSurfaceVariant
+    onSurfaceVariant = DarkOnSurfaceVariant,
+    primaryContainer = DarkPrimaryContainer,
+    onPrimaryContainer = DarkOnPrimaryContainer
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -54,7 +60,9 @@ private val LightColorScheme = lightColorScheme(
     onTertiary =   Color.White,
     onBackground = Color(0xFF1C1B1F), // ほぼ黒
     onSurface =    Color(0xFF1C1B1F),
-    onSurfaceVariant = LightOnSurfaceVariant
+    onSurfaceVariant = LightOnSurfaceVariant,
+    primaryContainer = LightPrimaryContainer,
+    onPrimaryContainer = LightOnPrimaryContainer
 )
 
 @Composable

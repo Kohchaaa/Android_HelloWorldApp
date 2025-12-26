@@ -48,6 +48,7 @@ import com.example.helloworldapp.feature.setting.viewmodel.SettingUiState
 import com.example.helloworldapp.feature.setting.viewmodel.SettingViewModel
 import com.example.helloworldapp.ui.common.PageTitle
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -79,6 +80,16 @@ fun SettingScreenContent(
     uiState: SettingUiState,
     onUpdateInput: ((UserSetting) -> UserSetting) -> Unit
 ){
+
+    var isVisible by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        // アニメーション時間分だけ待つ（例: 400ms - 500ms）
+        // ※この待ち時間はアニメーション時間より少し短くても良い
+        delay(250)
+        isVisible = true
+    }
+
+
     // uiStateの取り出し
     val currentInput = uiState.setting
 
@@ -108,6 +119,7 @@ fun SettingScreenContent(
 
     Scaffold(modifier = Modifier
         .fillMaxSize()
+        .background(MaterialTheme.colorScheme.background)
     ) { innerPadding ->
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -186,21 +198,25 @@ fun SettingScreenContent(
                     categoryName = "きらいなもの",
                     categoryIcon = Icons.Default.Clear
                 ) {
-                    StringListSetting(
-                        label = "嫌いな食材",
-                        chips = currentInput.dislikeIngredients,
-                        onChipsChange = { chips ->
-                            onUpdateInput { it.copy(dislikeIngredients = chips) }
-                        }
-                    )
+                    if (isVisible) {
+                        StringListSetting(
+                            label = "嫌いな食材",
+                            chips = currentInput.dislikeIngredients,
+                            onChipsChange = { chips ->
+                                onUpdateInput { it.copy(dislikeIngredients = chips) }
+                            }
+                        )
 
-                    StringListSetting(
-                        label = "嫌いな料理",
-                        chips = currentInput.dislikeDishes,
-                        onChipsChange = { dislikeDishes ->
-                            onUpdateInput { it.copy(dislikeDishes = dislikeDishes) }
-                        }
-                    )
+                        StringListSetting(
+                            label = "嫌いな料理",
+                            chips = currentInput.dislikeDishes,
+                            onChipsChange = { dislikeDishes ->
+                                onUpdateInput { it.copy(dislikeDishes = dislikeDishes) }
+                            }
+                        )
+                    } else {
+                        Text("...")
+                    }
                 }
 
                 SettingCategory(
@@ -217,39 +233,41 @@ fun SettingScreenContent(
 
             }
 
-            // デバッグ用
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Button(
-                    onClick = {
-
-                        // 1. uiStateのsetting項目からデータを作成
-                        val userInputData = currentInput
-
-                        // Json Format Setting
-                        val prettyJson = Json {
-                            prettyPrint = true
-                            prettyPrintIndent = "    "
-                        }
-
-                        // 2. UserInputオブジェクトをJSON文字列に変換
-                        userSettingJson = prettyJson.encodeToString(userInputData )
-                    }
+            if (isVisible) {
+                // デバッグ用
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.padding(16.dp)
                 ) {
-                    Text("現在の入力内容をJSONで表示")
-                }
-                // 3. JSON文字列を表示
-                if (userSettingJson.isNotEmpty()) {
-                    Text(
-                        text = userSettingJson,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.surfaceVariant)
-                            .padding(8.dp),
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                    Button(
+                        onClick = {
+
+                            // 1. uiStateのsetting項目からデータを作成
+                            val userInputData = currentInput
+
+                            // Json Format Setting
+                            val prettyJson = Json {
+                                prettyPrint = true
+                                prettyPrintIndent = "    "
+                            }
+
+                            // 2. UserInputオブジェクトをJSON文字列に変換
+                            userSettingJson = prettyJson.encodeToString(userInputData )
+                        }
+                    ) {
+                        Text("現在の入力内容をJSONで表示")
+                    }
+                    // 3. JSON文字列を表示
+                    if (userSettingJson.isNotEmpty()) {
+                        Text(
+                            text = userSettingJson,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(MaterialTheme.colorScheme.surfaceVariant)
+                                .padding(8.dp),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                 }
             }
         }

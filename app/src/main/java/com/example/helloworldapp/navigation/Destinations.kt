@@ -8,4 +8,13 @@ import kotlinx.serialization.Serializable
 object MainRoute
 
 @Serializable
+object HomeRoute
+
+@Serializable
+object CalendarRoute
+
+@Serializable
+object SuggestRoute
+
+@Serializable
 object SettingRoute
