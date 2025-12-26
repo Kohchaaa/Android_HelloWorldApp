@@ -8,13 +8,13 @@ plugins {
 android {
     namespace = "com.example.helloworldapp"
     compileSdk {
-        version = release(35)
+        version = release(36)
     }
 
     defaultConfig {
         applicationId = "com.example.helloworldapp"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
