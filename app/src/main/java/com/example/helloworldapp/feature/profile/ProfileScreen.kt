@@ -130,10 +130,10 @@ fun ProfileScreenContent(
                     .fillMaxWidth()
             ) {
 
-                PageTitle(title = "設定")
+                PageTitle(title = "Profile")
 
                 SettingCategory(
-                    categoryName = "ユーザー設定",
+                    categoryName = "一般",
                     categoryIcon = Icons.Default.AccountCircle
                 ) {
                     UserNameSetting(
