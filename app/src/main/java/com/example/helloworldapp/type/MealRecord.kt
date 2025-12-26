@@ -15,7 +15,14 @@ data class MealRecord(
     val estimationDetail: List<Ingredient> // 推定された材料を構造化して記録
 )
 
-enum class MealType { BREAKFAST, LUNCH, DINNER, SNACK, MIDNIGHT }
+enum class MealType(val label: String) {
+    BREAKFAST("朝食"),
+    LUNCH("昼食"),
+    DINNER("夕食"),
+    SNACK("間食"),
+    MIDNIGHT("夜食")
+}
+
 enum class InputMethod { TEXT, IMAGE }
 
 data class Nutrients(
