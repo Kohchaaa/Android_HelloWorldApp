@@ -1,5 +1,7 @@
 package com.example.helloworldapp.feature.main
 
+import CalendarScreen
+import SuggestScreen
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -61,13 +63,11 @@ fun MainScreen(
             }
 
             composable<CalendarRoute> {
-                Text("Calendar")
-                //CalendarScreen()
+                CalendarScreen()
             }
 
             composable<SuggestRoute> {
-                Text("Suggest")
-                //SuggestScreen()
+                SuggestScreen()
             }
 
             composable<ProfileRoute> {
