@@ -1,18 +1,24 @@
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.helloworldapp.data.mock.mockMealRecord
 import com.example.helloworldapp.feature.calendar.DailyMealStatus
 import com.example.helloworldapp.feature.calendar.MealCalendar
 import com.example.helloworldapp.type.MealType
 import com.example.helloworldapp.ui.theme.HelloWorldAppTheme
 import com.kizitonwose.calendar.compose.rememberCalendarState
+import com.kizitonwose.calendar.core.OutDateStyle
 import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import java.time.LocalDate
@@ -37,7 +43,8 @@ fun CalendarScreen(
             startMonth = startMonth,
             endMonth = endMonth,
             firstVisibleMonth = currentMonth,
-            firstDayOfWeek = firstDayOfWeek
+            firstDayOfWeek = firstDayOfWeek,
+            outDateStyle = OutDateStyle.EndOfGrid
         )
 
         val mealRecord = mockMealRecord
@@ -56,10 +63,18 @@ fun CalendarScreen(
                 )
             }
 
-        MealCalendar(
-            mealStatus = mealStatus,
-            state = state,
-            daysOfWeek = daysOfWeek
-        )
+        Column(
+            //verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            MealCalendar(
+                mealStatus = mealStatus,
+                state = state,
+                daysOfWeek = daysOfWeek
+            )
+
+            HorizontalDivider(thickness = 2.dp)
+        }
     }
 }

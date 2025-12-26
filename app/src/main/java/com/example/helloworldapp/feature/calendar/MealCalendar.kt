@@ -3,6 +3,7 @@ package com.example.helloworldapp.feature.calendar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -21,6 +22,7 @@ import com.example.helloworldapp.type.MealRecord
 import com.example.helloworldapp.type.MealType
 import com.example.helloworldapp.ui.theme.HelloWorldAppTheme
 import com.kizitonwose.calendar.compose.CalendarState
+import com.kizitonwose.calendar.compose.ContentHeightMode
 import com.kizitonwose.calendar.compose.HorizontalCalendar
 import com.kizitonwose.calendar.compose.rememberCalendarState
 import com.kizitonwose.calendar.core.CalendarMonth
@@ -38,15 +40,13 @@ fun MealCalendar(
     daysOfWeek: List<DayOfWeek>
 ) {
 
-
     HorizontalCalendar(
-        monthBody = { _, content -> MonthBody(content = content) },
-        monthContainer = { _, container -> MonthContainer(container = container) },
         state = state,
-        dayContent = {
-            CalendarCell(day = it, status = mealStatus[it.date])
-        },
-        monthHeader = { MonthHeader(it, daysOfWeek) }
+        dayContent = { CalendarCell(day = it, status = mealStatus[it.date]) },
+        monthContainer = { _, container -> MonthContainer(container = container) },
+        monthHeader = { MonthHeader(it, daysOfWeek) },
+        monthBody = { _, content -> MonthBody(content = content) },
+        contentHeightMode = ContentHeightMode.Wrap,
     )
 }
 
@@ -60,7 +60,7 @@ fun MonthContainer(
     Box(
         modifier = Modifier
             .width(screenWidth)
-            .padding(4.dp)
+            .padding(0.dp)
     ) {
         container() // Render the provided container!
     }

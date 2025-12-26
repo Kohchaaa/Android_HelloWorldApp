@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.helloworldapp.ui.common.Dot
+import com.example.helloworldapp.ui.common.RoundedSquareDot
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.DayPosition
 
@@ -50,15 +51,15 @@ fun CalendarCell(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                val dotSize = 4.dp
+                val dotSize = 6.dp
                 val spacerWidth = 2.dp
 
                 if (status != null) {
-                    Dot(active = status.hasLunch, color = Color.Blue, size = dotSize)
+                    RoundedSquareDot(active = status.hasLunch, color = Color.Blue, size = dotSize, cornerSize = 2.dp)
                     Spacer(Modifier.width(spacerWidth))
-                    Dot(active = status.hasBreakfast, color = Color.Green, size = dotSize)
+                    RoundedSquareDot(active = status.hasBreakfast, color = Color.Green, size = dotSize, cornerSize = 2.dp)
                     Spacer(Modifier.width(spacerWidth))
-                    Dot(active = status.hasDinner, color = Color.Red, size = dotSize)
+                    RoundedSquareDot(active = status.hasDinner, color = Color.Red, size = dotSize, cornerSize = 2.dp)
                 } else {
                     Spacer(Modifier.height(dotSize))
                 }
