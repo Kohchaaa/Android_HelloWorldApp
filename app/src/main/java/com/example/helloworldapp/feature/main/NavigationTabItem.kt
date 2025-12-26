@@ -1,4 +1,4 @@
-package com.example.helloworldapp.navigation
+package com.example.helloworldapp.feature.main
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
