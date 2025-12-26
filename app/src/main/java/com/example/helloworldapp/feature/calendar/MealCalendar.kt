@@ -23,6 +23,7 @@ import com.example.helloworldapp.ui.theme.HelloWorldAppTheme
 import com.kizitonwose.calendar.compose.CalendarState
 import com.kizitonwose.calendar.compose.HorizontalCalendar
 import com.kizitonwose.calendar.compose.rememberCalendarState
+import com.kizitonwose.calendar.core.CalendarMonth
 import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import java.time.DayOfWeek
@@ -39,50 +40,69 @@ fun MealCalendar(
 
 
     HorizontalCalendar(
-        monthBody = { _, content ->
-            Box(
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.background)
-            ) {
-                content() // Render the provided content!
-            }
-
-        },
-        monthContainer = { _, container ->
-            val configuration = LocalConfiguration.current
-            val screenWidth = configuration.screenWidthDp.dp
-            Box(
-                modifier = Modifier
-                    .width(screenWidth)
-                    .padding(4.dp)
-            ) {
-                container() // Render the provided container!
-            }
-        },
+        monthBody = { _, content -> MonthBody(content = content) },
+        monthContainer = { _, container -> MonthContainer(container = container) },
         state = state,
         dayContent = {
             CalendarCell(day = it, status = mealStatus[it.date])
-                     },
-        monthHeader = { month ->
-            Column (
-                modifier = Modifier.background(MaterialTheme.colorScheme.surface)
-            ) {
-                // 年月表示
-                Text(
-                    text = "${month.yearMonth.year}年 ${month.yearMonth.month.value}月",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 10.dp),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
-                )
-                // 曜日表示
-                DaysOfWeekTitle(daysOfWeek = daysOfWeek)
-            }
-        }
+        },
+        monthHeader = { MonthHeader(it, daysOfWeek) }
     )
 }
+
+// カレンダー全体のコンテナ
+@Composable
+fun MonthContainer(
+    container: @Composable () -> Unit
+) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    Box(
+        modifier = Modifier
+            .width(screenWidth)
+            .padding(4.dp)
+    ) {
+        container() // Render the provided container!
+    }
+}
+
+// カレンダーのヘッダー
+@Composable
+fun MonthHeader(
+    month: CalendarMonth,
+    daysOfWeek: List<DayOfWeek>
+) {
+    Column (
+        modifier = Modifier.background(MaterialTheme.colorScheme.surface)
+    ) {
+        // 年月表示
+        Text(
+            text = "${month.yearMonth.year}年 ${month.yearMonth.month.value}月",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
+        // 曜日表示
+        DaysOfWeekTitle(daysOfWeek = daysOfWeek)
+    }
+}
+
+// 日付部分
+@Composable
+fun MonthBody(
+    content: @Composable () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        content() // Render the provided content!
+    }
+}
+
 
 @Preview
 @Composable
