@@ -30,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.helloworldapp.type.MealType
+import com.example.helloworldapp.type.MissingMealColor
 import com.example.helloworldapp.type.color
 import com.example.helloworldapp.ui.common.Dot
 import com.example.helloworldapp.ui.common.RoundedSquareDot
@@ -172,6 +173,14 @@ fun MealDotsCanvas(
     status: DailyMealStatus,
     isCurrentMonth: Boolean
 ) {
+    // 色設定
+    val breakfastColor = MealType.BREAKFAST.color
+    val lunchColor     = MealType.LUNCH.color
+    val dinnerColor    = MealType.DINNER.color
+    val snackColor     = MealType.SNACK.color
+    val midnightColor  = MealType.MIDNIGHT.color
+    val missingColor   = MissingMealColor
+
     androidx.compose.foundation.Canvas(
         modifier = Modifier
             .fillMaxWidth()
@@ -186,7 +195,7 @@ fun MealDotsCanvas(
         // ■ 色決定ロジック
         fun getDotColor(mealColor: Color, hasEaten: Boolean): Color {
             // 1. ベースの色を決める (食べてればその色、食べてなければ指定のグレー)
-            val baseColor = if (hasEaten) mealColor else MISSING_MEAL_COLOR
+            val baseColor = if (hasEaten) mealColor else missingColor
 
             // 2. 当月以外なら薄くする (グレーの場合も、当月以外のグレーはさらに薄くするのが自然)
             return if (isCurrentMonth) {
@@ -198,14 +207,14 @@ fun MealDotsCanvas(
 
         // 共通描画関数
         fun drawMealDot(
-            mealType: MealType,
+            color: Color,
             hasEaten: Boolean,
             x: Float,
             y: Float,
             dotSize: Float
         ) {
             drawRoundRect(
-                color = getDotColor(mealType.color, hasEaten),
+                color = getDotColor(color, hasEaten),
                 topLeft = androidx.compose.ui.geometry.Offset(x, y),
                 size = androidx.compose.ui.geometry.Size(dotSize, dotSize),
                 cornerRadius = androidx.compose.ui.geometry.CornerRadius(cornerRadius)
@@ -219,9 +228,9 @@ fun MealDotsCanvas(
         val row1TotalWidth = (dotSizeMain * 3) + (spacing * 2)
         val row1StartX = centerX - (row1TotalWidth / 2)
 
-        drawMealDot(MealType.BREAKFAST, status.hasBreakfast, row1StartX, row1Y, dotSizeMain)
-        drawMealDot(MealType.LUNCH, status.hasLunch, row1StartX + dotSizeMain + spacing, row1Y, dotSizeMain)
-        drawMealDot(MealType.DINNER, status.hasDinner, row1StartX + (dotSizeMain + spacing) * 2, row1Y, dotSizeMain)
+        drawMealDot(breakfastColor, status.hasBreakfast, row1StartX, row1Y, dotSizeMain)
+        drawMealDot(lunchColor, status.hasLunch, row1StartX + dotSizeMain + spacing, row1Y, dotSizeMain)
+        drawMealDot(dinnerColor, status.hasDinner, row1StartX + (dotSizeMain + spacing) * 2, row1Y, dotSizeMain)
 
         // ==========================================
         // 下段: 間食・夜食
@@ -230,7 +239,7 @@ fun MealDotsCanvas(
         val row2TotalWidth = (dotSizeSub * 2) + spacing
         val row2StartX = centerX - (row2TotalWidth / 2)
 
-        drawMealDot(MealType.SNACK, status.hasSnack, row2StartX, row2Y, dotSizeSub)
-        drawMealDot(MealType.MIDNIGHT, status.hasMidnight, row2StartX + dotSizeSub + spacing, row2Y, dotSizeSub)
+        drawMealDot(snackColor, status.hasSnack, row2StartX, row2Y, dotSizeSub)
+        drawMealDot(midnightColor, status.hasMidnight, row2StartX + dotSizeSub + spacing, row2Y, dotSizeSub)
     }
 }
