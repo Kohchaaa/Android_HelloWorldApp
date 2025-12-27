@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.example.helloworldapp.LocalThemeController
 import com.example.helloworldapp.feature.main.MainScreen
 import com.example.helloworldapp.feature.profile.ProfileScreen
 
@@ -36,9 +37,8 @@ private val animSpec = tween<IntOffset>(durationMillis = ANIM_DURATION, easing =
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationScreen() {
+
     val navController = rememberNavController()
-
-
 
     NavHost(
         navController = navController,

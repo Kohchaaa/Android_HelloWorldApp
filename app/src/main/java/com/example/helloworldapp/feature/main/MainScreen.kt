@@ -20,6 +20,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.helloworldapp.LocalThemeController
 import com.example.helloworldapp.feature.calendar.AICalendar
 import com.example.helloworldapp.feature.home.HomeScreen
 import com.example.helloworldapp.feature.profile.ProfileScreen
@@ -32,6 +33,8 @@ import com.example.helloworldapp.navigation.SuggestRoute
 fun MainScreen(
     onNavigateSetting : () -> Unit
 ) {
+    val themeController = LocalThemeController.current
+
     val mainNavController = rememberNavController()
     val navBackStackEntry by mainNavController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -59,7 +62,9 @@ fun MainScreen(
         ) {
             composable<HomeRoute> {
                 HomeScreen(
-                    onNavigateSetting = onNavigateSetting
+                    onNavigateSetting = onNavigateSetting,
+                    onToggleTheme = { themeController.toggleTheme() },
+                    isDarkTheme = themeController.isDarkTheme
                 )
             }
 
