@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BakeryDining
 import androidx.compose.material.icons.rounded.ArrowForward
+import androidx.compose.material.icons.rounded.DoubleArrow
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -27,6 +28,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,9 +40,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.helloworldapp.data.mock.mockMealRecord
 import com.example.helloworldapp.feature.calendar.DailyMealStatus
 import com.example.helloworldapp.feature.calendar.MealCalendar
+import com.example.helloworldapp.feature.calendar.viewmodel.CalendarViewModel
 import com.example.helloworldapp.type.MealRecord
 import com.example.helloworldapp.type.MealType
 import com.example.helloworldapp.type.backgroundColor
@@ -58,12 +62,16 @@ import java.time.format.DateTimeFormatter
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CalendarScreen(
-
+    viewModel : CalendarViewModel = viewModel()
 ) {
     Scaffold(modifier = Modifier
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.background)
     ) {
+
+        val dailyRecord by viewModel.dailyRecord.collectAsState()
+        val mealStatus by viewModel.mealStatus.collectAsState()
+
         var selectedDate by remember { mutableStateOf(LocalDate.now()) }
 
         val currentMonth = remember { YearMonth.now() }
@@ -79,26 +87,6 @@ fun CalendarScreen(
             firstDayOfWeek = firstDayOfWeek,
             outDateStyle = OutDateStyle.EndOfGrid
         )
-
-        val mealRecord = mockMealRecord
-
-        val dailyRecord: Map<LocalDate, List<MealRecord>> = remember(mealRecord) {
-            mealRecord.groupBy { it.date.toLocalDate() }
-        }
-
-        // 食事レコードを，カレンダー表示に最適なデータに
-        // 日付をキーとして，その日のMealTypeごとに食べたかどうかが真偽値で保存
-        val mealStatus: Map<LocalDate, DailyMealStatus> = remember(dailyRecord) {
-            dailyRecord.mapValues { (_, records) ->
-                DailyMealStatus(
-                    hasBreakfast = records.any { it.mealType == MealType.BREAKFAST },
-                    hasLunch = records.any { it.mealType == MealType.LUNCH },
-                    hasDinner = records.any { it.mealType == MealType.DINNER },
-                    hasSnack = records.any { it.mealType == MealType.SNACK },
-                    hasMidnight = records.any { it.mealType == MealType.MIDNIGHT }
-                )
-            }
-        }
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -184,7 +172,7 @@ fun CalendarScreen(
                                     },
                                     trailingContent = {
                                         Icon(
-                                            imageVector = Icons.Rounded.ArrowForward,
+                                            imageVector = Icons.Rounded.DoubleArrow,
                                             contentDescription = "詳細",
                                             tint = MaterialTheme.colorScheme.primary
                                         )
