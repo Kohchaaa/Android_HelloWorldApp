@@ -1,11 +1,33 @@
+# --- Android Studio / IntelliJ ---
 *.iml
-.gradle
-/local.properties
 .idea/
+*.iws
+*.ipr
+
+# --- Build Output ---
+build/
+bin/
+gen/
+out/
+.gradle/
+.externalNativeBuild/
+.cxx/
+app/build/
+
+# --- OS Specific ---
 .DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+Thumbs.db
+
+# --- Local Configuration ---
 local.properties
+
+# --- Signing Keys (SECURITY) ---
+*.jks
+*.keystore
+*.p12
+*.key
+google-services.json
+
+# --- Log / Temp ---
 *.log
+captures/
